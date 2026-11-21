@@ -40,6 +40,7 @@ AIが作ったWebサイトを、AIとの対話で一段ずつ改善していく�
 | `step-08` | STEP 2-7 | アクセシビリティと仕上げ |
 | `step-09` | STEP 3-1 | 人間のレビュー①：実機での改行、先頭へ戻る動作、OGP |
 | `step-10` | STEP 3-2 | 人間のレビュー②：楽曲の試聴プレーヤー |
+| `step-11` | STEP 3-3 | 人間のレビュー③：意味のある動きで、華やかさと可愛らしさを |
 
 STEP2 の計画は `docs/process/step2-plan.md`、全体の振り返りと残存課題は `docs/process/step2-summary.md` にあります。
 

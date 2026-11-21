@@ -15,6 +15,7 @@ const report = {};
 for (const [name, vp] of Object.entries({ mobile: [390, 844], desktop: [1366, 900] })) {
   const page = await browser.newPage({ viewport: { width: vp[0], height: vp[1] }, hasTouch: name === 'mobile' });
   await page.goto(pathToFileURL(path.join(root, 'steps', id, 'index.html')).href, { waitUntil: 'networkidle' });
+  await page.waitForTimeout(2500); // let one-off entrance animations (STEP 3-3) finish before measuring
   await page.addScriptTag({ content: axeSrc });
   const axe = await page.evaluate(async () => {
     const r = await window.axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'] } });
