@@ -152,7 +152,7 @@ input[type="range"]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(
 .ticks li { min-width: 0; }
 .tick {
   display: flex; flex-direction: column; align-items: center; gap: 2px;
-  width: 100%; padding: 4px 2px 2px; border: 0; background: none; cursor: pointer;
+  width: 100%; min-height: 32px; padding: 4px 2px 2px; border: 0; background: none; cursor: pointer;
   color: var(--muted); border-radius: 4px; text-align: center;
 }
 .tick:hover { color: var(--ink); }

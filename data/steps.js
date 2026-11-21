@@ -467,5 +467,77 @@ window.DESLOP_STEPS = [
       "tablet": "screenshots/step-07/tablet.jpg",
       "desktop": "screenshots/step-07/desktop.jpg"
     }
+  },
+  {
+    "label": "STEP 2-7",
+    "short": "仕上げ",
+    "phase": "STEP2",
+    "title": "アクセシビリティと仕上げ：使える人と場面を広げる",
+    "theme": "アクセシビリティ（C9）と仕上げ（C10）",
+    "date": "2026-11-21",
+    "models": [
+      "Claude Opus 5.5（axe-core による監査・指示書の作成・レビュー・動作確認）",
+      "Claude Haiku 5.5（実装）"
+    ],
+    "summary": "見た目の方針は変えずに、細部を詰めた。axe-core（WCAG 2.2 の A / AA 規則）による監査の指摘をゼロにした。キーボードでメニューを操作できるようにし、スキップリンク、favicon、OGP を加えた。宛名の改行位置もそろえた。",
+    "reason": [
+      "監査で、STEP2 の途中で入り込んだ問題が2つ見つかった。ひとつは、2-1 で加えた半透明が 2-4 の配色と重なって起きた「終了」ラベルのコントラスト不足。もうひとつは、色だけで区別されるフッターのリンク。",
+      "スマホ幅で閉じているメニューのリンクに、Tab キーでフォーカスが移っていた。見えないものを操作できてしまう状態だった。",
+      "favicon や OGP がないと、ブラウザのタブや SNS で共有したときに「作りかけ」に見える。細部まで誰かが確かめたかどうかは、こうした所に出る（調査の「状態の欠落」）。"
+    ],
+    "changes": [
+      "「終了した予定」の半透明をやめ、文字色（--text-muted、5.8:1）で控えめに見せるようにした",
+      "フッターの「ページの先頭へ」に下線を付け、タップ領域を高さ 44px 以上にした。「詳細はスケジュールへ」は常に下線を表示",
+      "「本文へスキップ」リンクを追加",
+      "モバイルメニュー: 閉じているときはフォーカスが移らないようにした（visibility: hidden）。Esc キーで閉じてフォーカスをボタンに戻す。PC 幅に切り替わったら自動で閉じる",
+      "スケジュールの見出し構造を、グループ（h3）→ 予定（h4）に修正",
+      "favicon（ラジオの電波を表す同心円弧、文字なしの SVG）、theme-color、OGP を追加",
+      "「2 月 14 日」→「2月14日」。宛名を「電脳都市ネオ・ミナト／光合成ラボ第3区／天音ルミ 宛」のまとまりで改行するようにした"
+    ],
+    "result": "axe-core の指摘は、390px・1366px のいずれでもゼロ（記録: audit-before.json → audit-after.json）。タップ領域の不足と画像のサイズ指定漏れもゼロ。キーボード操作は実ブラウザで確認した。1回目の Tab でスキップリンクが表示されること、閉じたメニューのリンクを飛ばすこと、Esc でメニューが閉じてボタンにフォーカスが戻ることを確かめた。",
+    "evaluation": [
+      {
+        "check": "STEP2 全体の評価",
+        "finding": "チェックリスト C1〜C10 のすべてで、STEP1 にあった「選ばれていない既定値」を、サイトの文脈から選んだ表現に置き換えた。詳細は docs/process/step2-summary.md を参照。"
+      },
+      {
+        "check": "残存課題（STEP3 で人間の判断を仰ぎたい点）",
+        "finding": "プロフィール画像（STEP1 のネオン寄りの絵）の扱い、設定の「電脳都市」との整合、Google Fonts への依存、OGP 画像の絶対 URL、英語の固有名の扱い、そして静けさを優先したことで「アイドルらしい華やかさ」が弱まっていないか。"
+      }
+    ],
+    "issues": [
+      {
+        "title": "宛名の「宛」だけが次の行に送られていた（再指示1回）",
+        "detail": "PC幅で「…天音ルミ（改行）宛」、スマホ幅では「第3（改行）区」と、宛名の途中で改行されていた。3つのまとまりを span（inline-block）で囲む修正を指示した。修正後、390 / 820 / 1366px のすべてで、各まとまりが1行に収まることを計測して確認した。"
+      }
+    ],
+    "notes": [
+      "STEP1 にも axe-core を実行したところ、違反はゼロだった。AI Slop は「壊れている」ことではなく「誰も選んでいない」ことの問題だ、ということを示す結果として記録しておく。",
+      "OGP 画像は相対パスのまま。公開する URL が決まったら絶対 URL にする必要がある（残存課題）。"
+    ],
+    "prompts": [
+      {
+        "label": "改善指示（Claude Haiku 5.5 へ）",
+        "file": "records/step-08/prompt.md",
+        "text": "あなたは静的Webサイトの改善を担当します。\n\n対象ディレクトリ: /Users/ttan/dev/deslop-lab/steps/step-08\nこのディレクトリ内のファイルだけを編集してください。ほかのディレクトリ（steps/step-01〜07、records/ など）は絶対に変更しないでください。\n\nこれは架空のAIアイドル「天音ルミ」の公式サイトです。今回の改善テーマは「アクセシビリティと仕上げ」です。見た目の方針（色の値、書体、レイアウトの構成、画像）は変えずに、使える人と場面を広げる細部を詰めます。\n\n## 背景\n統括エージェントが、axe-core（WCAG 2.2 の A / AA 規則）と独自のチェックでこのサイトを監査しました。結果は records/step-08/audit-before.json にあります（読み取り専用）。主な指摘は次のとおりです。\n- 「終了」ラベル（.tag-past）のコントラスト不足。原因は、終了した予定の行全体にかかっている opacity: .7\n- フッターの「ページの先頭へ」リンクが、色だけで本文と区別されている。タップ領域も高さ 20px しかない\n- スキップリンク、favicon、OGP、theme-color がない\nまた、コードを読んで次の問題も見つかっています。\n- スマホ幅で閉じているメニューのリンクに、Tab キーでフォーカスが移ってしまう（見えないのに操作できる）\n- メニューを Esc キーで閉じられない\n- スケジュールの見出し構造: グループ名（今後の予定／終了した予定）と、各予定の名前が、どちらも h3 になっている\n\n## 作業\n1. コントラスト\n   - .schedule-past li の opacity を削除してください。終了した予定は、文字色を --text-muted（背景とのコントラスト 5.8:1）にすることで控えめに見せます。日付・予定名・説明・ラベルのすべてが、WCAG AA（通常の文字 4.5:1）を満たすようにします。\n2. リンクとタップ領域\n   - フッターの「ページの先頭へ」に下線を付け、上下に余白を足してタップ領域を高さ 44px 以上にしてください。\n   - 本文中のリンク（ニュースの各項目、「詳細はスケジュールへ」など）は、ホバー時だけでなく常に下線か、色以外の手がかりで区別できるようにしてください（ニュースの項目は行全体がリンクなので、下線は不要です。ただし、ホバーとフォーカスで背景色か下線が出るようにします）。\n3. スキップリンク\n   - body の最初に「本文へスキップ」リンク（href=\"#main\"）を置き、<main id=\"main\"> にしてください。通常は画面外に隠し、フォーカスされたときだけ左上に表示します（背景 --ramune、文字 --on-accent）。\n4. モバイルメニュー（js/main.js と CSS）\n   - スマホ幅でメニューが閉じているときは、リンクにフォーカスが移らないようにしてください（例: 閉じているときは visibility: hidden。開くときは visible に戻す）。\n   - メニューが開いているとき、Esc キーで閉じて、フォーカスをメニューボタンに戻してください。\n   - 画面幅が広がって PC 表示に切り替わったときに、メニューが開いたままの状態が残らないようにしてください。\n5. 見出し構造\n   - スケジュールの各予定の名前を h4 にしてください（グループ名の h3 の下に入るため）。見た目（文字の大きさ・太さ）は今と同じに保ちます。\n6. メタ情報と favicon\n   - favicon を SVG で作ってください（images/favicon.svg）。デザインは、角丸の正方形（背景 #8fdcd3）に、Zen Maru Gothic 風の太い「ル」の字ではなく、シンプルな図形にしてください。ラジオの電波を表す同心円弧3本（色 #111830）が目安です。文字を使わないのは、フォントが読み込まれない環境でも同じ形に見えるようにするためです。\n   - <link rel=\"icon\" href=\"images/favicon.svg\" type=\"image/svg+xml\"> を追加してください。\n   - <meta name=\"theme-color\" content=\"#111830\"> を追加してください。\n   - OGP を追加してください: og:type=website、og:title（title と同じ）、og:description（meta description と同じ）、og:image=images/hero-night.webp、og:locale=ja_JP。\n7. 細部\n   - プロフィールの「登録上の誕生日は 2 月 14 日」の半角スペースを削除し、「2月14日」にしてください（ほかの日付表記とそろえる）。\n   - html の scroll-behavior: smooth は、prefers-reduced-motion: reduce のときに auto になっていることを確認してください（すでにあれば変更不要）。\n\n## 完了条件\n- HTML の構造が正しく、JavaScript のエラーがないこと。\n- 上記の指摘がすべて解消されていること。\n- 最後に、変更点の一覧と、迷った点・意図どおりにできなかった点を報告してください。統括エージェントが、同じ監査をもう一度実行して確認します。"
+      },
+      {
+        "label": "再指示：宛名の改行位置",
+        "file": "records/step-08/prompt-2.md",
+        "text": "（再指示）steps/step-08 を PC幅（1366px）で確認したところ、ファンレターの宛先が「電脳都市ネオ・ミナト 光合成ラボ第3区　天音ルミ（改行）宛」と、「宛」の1文字だけが次の行に送られていました。スマホ幅では「第3（改行）区」のように、地名の途中で改行されています。\n\n宛名として自然に読めるよう、「電脳都市ネオ・ミナト」「光合成ラボ第3区」「天音ルミ 宛」の3つのまとまりが途中で改行されないようにしてください（例: それぞれを span で囲み、display: inline-block にする）。対象は引き続き steps/step-08 だけです。ほかの箇所は変更しないでください。修正後、変更内容を報告してください。"
+      },
+      {
+        "label": "実装エージェントの完了報告（原文）",
+        "file": "records/step-08/agent-report.md",
+        "text": "# STEP 2-7 実装エージェントの完了報告（原文ママ）\n\n実装: Claude Haiku 5.5（サブエージェント）\n\n---\n\n指示書 (records/step-08/prompt.md) に従い、steps/step-08 の改善を行いました。指示書とその他のディレクトリ（steps/step-01〜07、records/）は変更していません。コミットはしていません。\n\n## 変更点\n\n**steps/step-08/index.html**\n- head: `<meta name=\"theme-color\" content=\"#111830\">`、OGP（og:type=website、og:title、og:description（description と同文）、og:image=images/hero-night.webp、og:locale=ja_JP）、`<link rel=\"icon\" href=\"images/favicon.svg\" type=\"image/svg+xml\">` を追加。\n- body 先頭に `<a class=\"skip-link\" href=\"#main\">本文へスキップ</a>` を追加。`<main id=\"main\">` に変更。\n- スケジュールの各予定名（4 件）を h3 から h4 に変更。グループ名の h3（今後の予定／終了した予定）はそのまま。\n- プロフィールの「登録上の誕生日は 2 月 14 日」を「2月14日」に変更。\n- フッターの「ページの先頭へ」に class=\"to-top\" を付与。\n\n**steps/step-08/css/style.css**\n- `.schedule-past li { opacity: .7 }` を削除。代わりに `.schedule-past > li` と、その中の time・h4・p・.tag を --text-muted にしました（セレクタの詳細度は、既存の `.schedule > li > time` などより高くしてあります）。\n- スキップリンク（`.skip-link`）のスタイルを追加。普段は translateY(-200%) で画面外、フォーカス時に左上へ表示（背景 --ramune、文字 --on-accent）。\n- 本文のリンク `.next-live-link` に常時の下線を追加。ニュース（`.news-list a`）は常時の下線なし、フォーカス時に下線（ホバーは既存の a:hover で下線）。\n- フッターの「ページの先頭へ」に下線、min-height: 44px、上下の padding を追加。\n- h4 を見出しのタイポグラフィ規則（font-family・weight・line-height）に追加。`.schedule h3` を `.schedule h4` に変更し、文字の大きさは 1.125rem のまま。\n- スマホ幅（max-width: 720px）で `.gnav` に visibility: hidden を追加し、`.nav-open` で visible に戻す。visibility も transition に含めました。\n- scroll-behavior: smooth は既に prefers-reduced-motion: reduce で auto になっていたため変更なし。\n\n**steps/step-08/js/main.js**\n- Esc キーで、開いているメニューを閉じてフォーカスをメニューボタンに戻す処理を追加。\n- matchMedia(\"(min-width: 721px)\") の change で、PC 表示に切り替わったらメニューを閉じる処理を追加（addEventListener が使えない環境では addListener にフォールバック）。\n\n**steps/step-08/images/favicon.svg（新規）**\n- 64×64、角丸（rx 14）の正方形を #8fdcd3 で塗り、中心の点（#111830）と、同心円弧 3 本（#111830、線幅 4、丸い線端）を配置。文字は使用していません。\n\n## 確認\n- `node --check js/main.js`: 構文エラーなし。\n- index.html: Python の HTMLParser でタグの対応を確認、閉じ忘れ・不正な閉じタグなし。\n- favicon.svg: XML として解析できることを確認。\n- `opacity` は .nav-toggle の span など、スケジュール以外でのみ残っていることを確認。\n\n## 迷った点・未確認の点\n- ブラウザでの表示確認と axe-core の再実行はしていません。コントラストは、各要素の色を --text-muted（記載どおり 5.8:1）にした前提で、計算ではなく記載値を信用しています。監査での再確認が必要です。\n- og:image は指示どおり相対パス（images/hero-night.webp）にしています。SNS のクローラーは絶対 URL を要求することがあるため、公開先が決まったら絶対 URL への変更を検討してください。\n- favicon は /favicon.ico へのリクエストには応答しません（指示どおり SVG の link のみ）。\n- Esc での閉じる処理は、メニューが開いている状態（スマホ幅のみ）でのみ動作します。PC 表示ではメニューボタンが非表示のため、この処理は発火しません。\n- ニュースは「行全体がリンク」として扱い、常時の下線は付けていません（指示どおり）。本文中の下線付きリンクは「詳細はスケジュールへ」のみです。\n\n---\n\n## 再指示（prompt-2.md）への完了報告（原文ママ）\n\n再指示 (records/step-08/prompt-2.md) に対応しました。対象は steps/step-08 のみで、prompt-2.md は編集していません。\n\n## 変更点\n- steps/step-08/index.html: ファンレターの宛名 `<address>` の中身を、3 つのまとまりの span に分けました。\n  - `<span class=\"addr-part\">電脳都市ネオ・ミナト</span>`\n  - `<span class=\"addr-part\">光合成ラボ第3区</span>`\n  - `<span class=\"addr-part\">天音ルミ 宛</span>`\n  - 各 span の間は、元の文面と同じ区切り（半角スペース、全角スペース）にしています。\n- steps/step-08/css/style.css: `.contact address .addr-part { display: inline-block; }` を追加。`.contact address` の既存ルールの直後に置きました。\n\n## 確認\n- HTML のタグの対応を Python の HTMLParser で確認。閉じ忘れや不正な閉じタグはありませんでした。\n- 1366px や スマホ幅での実際の折り返しは、ブラウザで確認していません。inline-block にした各まとまりは途中で改行されないはずですが、表示での確認はお願いします。\n- git status 上、変更は steps/step-08 と records/step-08（未追跡）のみです。コミットはしていません。"
+      }
+    ],
+    "id": "step-08",
+    "site": "steps/step-08/index.html",
+    "screenshots": {
+      "mobile": "screenshots/step-08/mobile.jpg",
+      "tablet": "screenshots/step-08/tablet.jpg",
+      "desktop": "screenshots/step-08/desktop.jpg"
+    }
   }
 ];

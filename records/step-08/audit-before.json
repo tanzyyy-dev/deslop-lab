@@ -1,0 +1,109 @@
+{
+  "mobile": {
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          ".tag-past"
+        ],
+        "count": 1
+      },
+      {
+        "id": "link-in-text-block",
+        "impact": "serious",
+        "help": "Links must be distinguishable without relying on color",
+        "nodes": [
+          "footer > a[href$=\"#top\"]"
+        ],
+        "count": 1
+      }
+    ],
+    "smallTargets": [
+      "a \"ページの先頭へ\" 101x20"
+    ],
+    "imgsNoSize": [],
+    "meta": {
+      "description": true,
+      "ogTitle": false,
+      "ogImage": false,
+      "favicon": false,
+      "themeColor": false,
+      "skipLink": false,
+      "lang": "ja"
+    },
+    "headings": [
+      "H1 天音ルミ\n          L",
+      "H2 スケジュール",
+      "H3 今後の予定",
+      "H3 Holiday Stream S",
+      "H3 ラジオ番組「ルミの夜更かし電波」",
+      "H3 LIVE「LUMINA ECHO",
+      "H3 終了した予定",
+      "H3 Fan Meeting「Good",
+      "H2 ニュース",
+      "H2 楽曲",
+      "H3 LUMINA",
+      "H3 Midnight Signal",
+      "H3 Lumen Drop",
+      "H2 プロフィール",
+      "H2 グッズ",
+      "H3 ホログラムアクリルスタンド",
+      "H3 ルミ公式ペンライト",
+      "H3 Starlight Tシャツ",
+      "H3 ランダム ホロカード（全8種）",
+      "H2 ファンレター・おたより"
+    ],
+    "deadLinks": []
+  },
+  "desktop": {
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          ".tag-past"
+        ],
+        "count": 1
+      }
+    ],
+    "smallTargets": [
+      "a \"ページの先頭へ\" 101x20"
+    ],
+    "imgsNoSize": [],
+    "meta": {
+      "description": true,
+      "ogTitle": false,
+      "ogImage": false,
+      "favicon": false,
+      "themeColor": false,
+      "skipLink": false,
+      "lang": "ja"
+    },
+    "headings": [
+      "H1 天音ルミ\n          L",
+      "H2 スケジュール",
+      "H3 今後の予定",
+      "H3 Holiday Stream S",
+      "H3 ラジオ番組「ルミの夜更かし電波」",
+      "H3 LIVE「LUMINA ECHO",
+      "H3 終了した予定",
+      "H3 Fan Meeting「Good",
+      "H2 ニュース",
+      "H2 楽曲",
+      "H3 LUMINA",
+      "H3 Midnight Signal",
+      "H3 Lumen Drop",
+      "H2 プロフィール",
+      "H2 グッズ",
+      "H3 ホログラムアクリルスタンド",
+      "H3 ルミ公式ペンライト",
+      "H3 Starlight Tシャツ",
+      "H3 ランダム ホロカード（全8種）",
+      "H2 ファンレター・おたより"
+    ],
+    "deadLinks": []
+  }
+}

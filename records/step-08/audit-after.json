@@ -1,0 +1,76 @@
+{
+  "mobile": {
+    "axe": [],
+    "smallTargets": [],
+    "imgsNoSize": [],
+    "meta": {
+      "description": true,
+      "ogTitle": true,
+      "ogImage": true,
+      "favicon": true,
+      "themeColor": true,
+      "skipLink": true,
+      "lang": "ja"
+    },
+    "headings": [
+      "H1 天音ルミ\n          L",
+      "H2 スケジュール",
+      "H3 今後の予定",
+      "H4 Holiday Stream S",
+      "H4 ラジオ番組「ルミの夜更かし電波」",
+      "H4 LIVE「LUMINA ECHO",
+      "H3 終了した予定",
+      "H4 Fan Meeting「Good",
+      "H2 ニュース",
+      "H2 楽曲",
+      "H3 LUMINA",
+      "H3 Midnight Signal",
+      "H3 Lumen Drop",
+      "H2 プロフィール",
+      "H2 グッズ",
+      "H3 ホログラムアクリルスタンド",
+      "H3 ルミ公式ペンライト",
+      "H3 Starlight Tシャツ",
+      "H3 ランダム ホロカード（全8種）",
+      "H2 ファンレター・おたより"
+    ],
+    "deadLinks": []
+  },
+  "desktop": {
+    "axe": [],
+    "smallTargets": [],
+    "imgsNoSize": [],
+    "meta": {
+      "description": true,
+      "ogTitle": true,
+      "ogImage": true,
+      "favicon": true,
+      "themeColor": true,
+      "skipLink": true,
+      "lang": "ja"
+    },
+    "headings": [
+      "H1 天音ルミ\n          L",
+      "H2 スケジュール",
+      "H3 今後の予定",
+      "H4 Holiday Stream S",
+      "H4 ラジオ番組「ルミの夜更かし電波」",
+      "H4 LIVE「LUMINA ECHO",
+      "H3 終了した予定",
+      "H4 Fan Meeting「Good",
+      "H2 ニュース",
+      "H2 楽曲",
+      "H3 LUMINA",
+      "H3 Midnight Signal",
+      "H3 Lumen Drop",
+      "H2 プロフィール",
+      "H2 グッズ",
+      "H3 ホログラムアクリルスタンド",
+      "H3 ルミ公式ペンライト",
+      "H3 Starlight Tシャツ",
+      "H3 ランダム ホロカード（全8種）",
+      "H2 ファンレター・おたより"
+    ],
+    "deadLinks": []
+  }
+}
