@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeSlop Lab</title>
+  <meta name="description" content="AIが作ったWebサイトを、AIとの対話で一段ずつ改善していく。その過程を実物・プロンプト・修正理由とともにたどるWebデザイン教材。">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+JP:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="assets/viewer.css">
+  <script>
+    try { const t = localStorage.getItem('deslop-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#panel">解説へスキップ</a>
+
+  <header class="masthead">
+    <div class="brand">
+      <span class="brand-name">DeSlop Lab</span>
+      <span class="brand-sub">AIが作ったサイトを、AIと一緒に直していく記録</span>
+    </div>
+    <nav class="masthead-links" aria-label="関連資料">
+      <a href="https://github.com/tanzyyy-dev/deslop-lab/blob/main/docs/research/ai-slop.md" target="_blank" rel="noopener">AI Slop 調査メモ</a>
+      <a href="https://github.com/tanzyyy-dev/deslop-lab" target="_blank" rel="noopener">GitHub</a>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="表示テーマを切り替え">
+        <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M10 2a8 8 0 1 0 0 16V2Z" fill="currentColor"/><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <section class="stage-col" aria-label="制作物のプレビュー">
+      <div class="now" aria-live="polite">
+        <p class="now-step" id="nowStep">—</p>
+        <h1 class="now-title" id="nowTitle">読み込み中</h1>
+      </div>
+
+      <div class="timeline" id="timeline">
+        <div class="timeline-row">
+          <button type="button" class="step-btn" id="prevBtn" aria-label="前のステップ">
+            <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="slider-wrap">
+            <label class="visually-hidden" for="slider">表示するステップ</label>
+            <input type="range" id="slider" min="0" max="0" step="1" value="0">
+            <ol class="ticks" id="ticks" aria-label="ステップ一覧"></ol>
+          </div>
+          <button type="button" class="step-btn" id="nextBtn" aria-label="次のステップ">
+            <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <p class="timeline-hint">スライダーをドラッグ、または <kbd>←</kbd> <kbd>→</kbd> キーで切り替え</p>
+      </div>
+
+      <div class="stage-bar">
+        <div class="device-switch" role="radiogroup" aria-label="プレビューの画面幅">
+          <button type="button" role="radio" data-device="mobile" aria-checked="false">スマホ<span class="device-px">390</span></button>
+          <button type="button" role="radio" data-device="tablet" aria-checked="false">タブレット<span class="device-px">820</span></button>
+          <button type="button" role="radio" data-device="desktop" aria-checked="false">PC<span class="device-px">1366</span></button>
+        </div>
+        <a class="open-link" id="openLink" href="#" target="_blank" rel="noopener">単独で開く
+          <svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="M8 4H4v12h12v-4M11 3h6v6M17 3l-8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="stage" id="stage">
+        <div class="frame-box" id="frameBox">
+          <iframe id="frame" title="ステップの制作物" loading="eager"></iframe>
+        </div>
+        <p class="scale-note" id="scaleNote"></p>
+      </div>
+    </section>
+
+    <aside class="panel" id="panel" aria-label="このステップの解説" tabindex="-1">
+      <div class="tabs" role="tablist" aria-label="解説の種類">
+        <button type="button" role="tab" id="tab-overview" aria-controls="pane-overview" aria-selected="true">概要</button>
+        <button type="button" role="tab" id="tab-prompt" aria-controls="pane-prompt" aria-selected="false" tabindex="-1">プロンプト</button>
+        <button type="button" role="tab" id="tab-changes" aria-controls="pane-changes" aria-selected="false" tabindex="-1">変更内容</button>
+        <button type="button" role="tab" id="tab-log" aria-controls="pane-log" aria-selected="false" tabindex="-1">記録</button>
+      </div>
+      <div class="pane" role="tabpanel" id="pane-overview" aria-labelledby="tab-overview" tabindex="0"></div>
+      <div class="pane" role="tabpanel" id="pane-prompt" aria-labelledby="tab-prompt" tabindex="0" hidden></div>
+      <div class="pane" role="tabpanel" id="pane-changes" aria-labelledby="tab-changes" tabindex="0" hidden></div>
+      <div class="pane" role="tabpanel" id="pane-log" aria-labelledby="tab-log" tabindex="0" hidden></div>
+    </aside>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <noscript><p class="noscript">この教材の表示には JavaScript が必要です。各ステップの制作物は <code>steps/</code> フォルダから直接開けます。</p></noscript>
+  <script src="data/steps.js"></script>
+  <script src="assets/viewer.js"></script>
+</body>
+</html>

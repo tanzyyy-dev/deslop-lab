@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const recDir = path.join(root, 'records');
-const dirs = fs.readdirSync(recDir).filter((d) => /^step-\d+/.test(d)).sort();
+const dirs = fs.readdirSync(recDir).filter((d) => /^step-\d+/.test(d) && fs.existsSync(path.join(recDir, d, 'meta.json'))).sort();
 
 const steps = dirs.map((d) => {
   const meta = JSON.parse(fs.readFileSync(path.join(recDir, d, 'meta.json'), 'utf8'));
