@@ -15,16 +15,16 @@ gen_dir="$HOME/.codex/generated_images"
 marker="$(mktemp)"
 mkdir -p "$(dirname "$out")"
 work="$(mktemp -d)"
-args=(exec --skip-git-repo-check -s read-only)
 instr="Use your built-in image generation tool exactly once to generate the image described below. Do not write any files and do not run shell commands. After generating, reply only with the word DONE."
+img=()
 if [[ -n "$ref" ]]; then
-  args+=(-i "$ref")
+  img=(-i "$ref")   # must come after the prompt: -i takes multiple values
   instr="$instr The attached image is the character reference: keep the same character design (face, hair, eye colour, outfit motifs) unless the prompt says otherwise. Do not copy its composition."
 fi
-( cd "$work" && codex "${args[@]}" "$instr
+( cd "$work" && codex exec --skip-git-repo-check -s read-only "$instr
 
 IMAGE PROMPT:
-$prompt" >/dev/null 2>&1 ) || true
+$prompt" ${img[@]+"${img[@]}"} </dev/null >/dev/null 2>&1 ) || true
 newest="$(find "$gen_dir" -name '*.png' -newer "$marker" -print0 2>/dev/null | xargs -0 ls -t 2>/dev/null | head -1 || true)"
 rm -f "$marker"; rm -rf "$work"
 if [[ -z "$newest" ]]; then echo "no image generated" >&2; exit 1; fi

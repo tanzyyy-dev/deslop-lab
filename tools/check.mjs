@@ -19,7 +19,6 @@ const browser = await chromium.launch(process.env.PW_CHANNEL ? { channel: proces
 fs.mkdirSync(path.join(root, 'screenshots/viewer'), { recursive: true });
 
 try {
-  const n = (await import(path.join(root, 'data/steps.js')).catch(() => null), null);
   const sizes = { mobile: [390, 844], tablet: [820, 1180], desktop: [1440, 900] };
   for (const [name, [w, h]] of Object.entries(sizes)) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, hasTouch: name !== 'desktop', isMobile: name === 'mobile', permissions: ['clipboard-read', 'clipboard-write'] });
@@ -69,6 +68,18 @@ try {
     const fw = await page.evaluate(() => document.getElementById('frameBox').style.width);
     ok(fw === '390px', `[${name}] device switch sets frame width (${fw})`);
     await page.locator('[data-device="desktop"]').click();
+    // compare mode: disabled at STEP 1, shows previous step next to current otherwise
+    ok(await page.locator('#compareBtn').isDisabled(), `[${name}] compare disabled at STEP 1`);
+    await page.locator('#nextBtn').click();
+    await page.locator('#compareBtn').click();
+    await page.waitForTimeout(300);
+    ok(await page.locator('#slotPrev').isVisible(), `[${name}] compare shows previous step`);
+    ok((await page.locator('#framePrev').getAttribute('src')).includes('step-01'), `[${name}] compare loads the previous snapshot`);
+    const theme = await page.locator('#nowTheme').textContent();
+    ok(theme.startsWith('改善テーマ'), `[${name}] improvement theme is shown`);
+    await page.screenshot({ path: path.join(root, `screenshots/viewer/${name}-compare.jpg`), type: 'jpeg', quality: 80 });
+    await page.locator('#compareBtn').click();
+    ok(!(await page.locator('#slotPrev').isVisible()), `[${name}] compare toggles off`);
     // final screenshot at last step with prompt tab
     await page.locator('#slider').focus();
     await page.keyboard.press('End');

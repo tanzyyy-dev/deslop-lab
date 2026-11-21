@@ -12,6 +12,12 @@
   const prevBtn = $('#prevBtn');
   const nextBtn = $('#nextBtn');
   const toast = $('#toast');
+  const slotPrev = $('#slotPrev');
+  const slotCur = $('#slotCur');
+  const framePrev = $('#framePrev');
+  const compareBtn = $('#compareBtn');
+  let comparing = false;
+  let wantCompare = false;
   const DEVICES = { mobile: 390, tablet: 820, desktop: 1366 };
   const store = {
     get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
@@ -84,17 +90,55 @@
       setDevice(deviceBtns[(i + dir + deviceBtns.length) % deviceBtns.length].dataset.device, true);
     });
   });
+  function fitBox(box, view) {
+    const w = DEVICES[device];
+    const sw = view.clientWidth, sh = view.clientHeight;
+    const scale = Math.min(1, sw / w);
+    box.style.width = `${w}px`;
+    box.style.height = `${sh / scale}px`;
+    box.style.transform = scale < 1 ? `scale(${scale})` : '';
+    box.style.marginInline = scale < 1 ? `${(sw - w) / 2}px` : '';
+    return scale;
+  }
   function fit() {
     const w = DEVICES[device];
-    const sw = stage.clientWidth, sh = stage.clientHeight;
-    const scale = Math.min(1, sw / w);
-    frameBox.style.width = `${w}px`;
-    frameBox.style.height = `${sh / scale}px`;
-    frameBox.style.transform = scale < 1 ? `scale(${scale})` : '';
-    frameBox.style.marginInline = scale < 1 ? `${(sw - w) / 2}px` : '';
+    const scale = fitBox(frameBox, slotCur.querySelector('.slot-view'));
+    if (comparing) fitBox(framePrev.parentElement, slotPrev.querySelector('.slot-view'));
     scaleNote.textContent = scale < 1 ? `幅 ${w}px を ${Math.round(scale * 100)}% で表示` : '';
   }
   new ResizeObserver(fit).observe(stage);
+
+  /* ---------- compare with previous step ---------- */
+  function setCompare(on) {
+    wantCompare = on;
+    comparing = on && current > 0;
+    compareBtn.setAttribute('aria-pressed', String(comparing));
+    slotPrev.hidden = !comparing;
+    $('#labelCur').hidden = !comparing;
+    if (comparing) {
+      const p = steps[current - 1], s = steps[current];
+      if (!framePrev.src.endsWith(p.site)) framePrev.src = p.site;
+      $('#labelPrev').replaceChildren(el('b', { text: p.label }), `前：${p.title}`);
+      $('#labelCur').replaceChildren(el('b', { text: s.label }), `後：${s.title}`);
+    }
+    fit();
+  }
+  compareBtn.addEventListener('click', () => setCompare(!wantCompare));
+  // keep both previews at the same relative scroll position (same-origin only; ignored on file://)
+  let syncing = false;
+  const linkScroll = (from, to) => {
+    try {
+      from.contentWindow.addEventListener('scroll', () => {
+        if (!comparing || syncing) return;
+        const a = from.contentDocument.scrollingElement, b = to.contentDocument.scrollingElement;
+        syncing = true;
+        b.scrollTop = (a.scrollTop / Math.max(1, a.scrollHeight - a.clientHeight)) * (b.scrollHeight - b.clientHeight);
+        requestAnimationFrame(() => { syncing = false; });
+      }, { passive: true });
+    } catch (e) { /* cross-origin (file://): no sync */ }
+  };
+  frame.addEventListener('load', () => linkScroll(frame, framePrev));
+  framePrev.addEventListener('load', () => linkScroll(framePrev, frame));
 
   /* ---------- tabs ---------- */
   const tabs = [...document.querySelectorAll('[role="tab"]')];
@@ -147,8 +191,8 @@
   function renderPrompts(s) {
     const pane = $('#pane-prompt');
     pane.replaceChildren(
-      el('p', { text: 'AIに実際に渡したプロンプトです。誤字も含めて手を加えずに載せています。' }),
-      ...s.prompts.map((p) => {
+      el('p', { text: 'AIに実際に渡したプロンプトを、一字一句そのまま載せています。' }),
+      ...s.prompts.filter((p) => !isReport(p)).map((p) => {
         const btn = el('button', { type: 'button', class: 'copy-btn', 'aria-label': `「${p.label}」をコピー` }, 'コピー');
         btn.addEventListener('click', () => copy(p.text, btn));
         return el('section', { class: 'prompt-block' },
@@ -158,6 +202,7 @@
       }),
     );
   }
+  const isReport = (p) => /agent-report\.md$/.test(p.file);
   function renderChanges(s) {
     const pane = $('#pane-changes');
     const kids = [el('h2', { text: s.phase === 'STEP1' ? '作られたもの' : '変更内容' }), list(s.changes)];
@@ -183,6 +228,13 @@
         : el('p', { class: 'empty', text: 'このステップでは、再指示が必要な問題はありませんでした。' }),
       s.notes && s.notes.length ? el('h2', { text: '補足' }) : null,
       s.notes && s.notes.length ? list(s.notes) : null,
+      ...s.prompts.filter(isReport).flatMap((p) => [
+        el('h2', { text: 'AIからの完了報告（原文）' }),
+        el('details', { class: 'report' },
+          el('summary', { text: `${p.label}を開く` }),
+          el('pre', { tabindex: '0' }, el('code', { text: p.text })),
+          el('div', { class: 'prompt-src' }, '原本: ', el('code', { text: p.file }))),
+      ]),
     );
   }
   async function copy(text, btn) {
@@ -213,12 +265,15 @@
     nextBtn.disabled = i === steps.length - 1;
     $('#nowStep').textContent = s.label;
     $('#nowTitle').textContent = s.title;
+    $('#nowTheme').textContent = s.theme ? `改善テーマ：${s.theme}` : '';
+    compareBtn.disabled = i === 0;
     document.title = `${s.label} ${s.title} — DeSlop Lab`;
     $('#openLink').href = s.site;
     if (changed) {
       frame.src = s.site;
       frame.title = `${s.label}の制作物：${s.title}`;
       renderOverview(s, i); renderPrompts(s); renderChanges(s); renderLog(s);
+      setCompare(wantCompare);
       if (location.hash !== `#${s.id}`) history.replaceState(null, '', `#${s.id}`);
     }
     if (fromControl && document.activeElement && document.activeElement.classList.contains('tick')) {
