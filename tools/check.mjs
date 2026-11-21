@@ -109,6 +109,13 @@ try {
   await browser.close();
   server.kill();
 }
+// the latest step's canonical / og:url must point to its own folder (copying a step folder carries the old URL along)
+{
+  const latest = fs.readdirSync(path.join(root, 'steps')).filter((d) => /^step-\d+$/.test(d)).sort().at(-1);
+  const html = fs.readFileSync(path.join(root, 'steps', latest, 'index.html'), 'utf8');
+  const urls = [...html.matchAll(/(?:rel="canonical" href|property="og:url" content)="([^"]+)"/g)].map((m) => m[1]);
+  ok(urls.every((u) => u.endsWith(`/steps/${latest}/`)), `${latest}: canonical / og:url point to its own folder ${urls.join(' ')}`);
+}
 // no local absolute paths in tracked text files (public repository)
 {
   const { execFileSync } = await import('node:child_process');

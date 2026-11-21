@@ -58,6 +58,13 @@
     ticks.append(el('li', {}, b));
   });
   slider.addEventListener('input', () => go(Number(slider.value), false));
+  // choose how much of each tick label fits: names (>= 76px per step), numbers (>= 40px), or dots only
+  const fitTicks = () => {
+    const per = ticks.clientWidth / steps.length;
+    ticks.classList.toggle('no-names', per < 76);
+    ticks.classList.toggle('compact', per < 40);
+  };
+  new ResizeObserver(fitTicks).observe(ticks);
   prevBtn.addEventListener('click', () => go(current - 1, true));
   nextBtn.addEventListener('click', () => go(current + 1, true));
   document.addEventListener('keydown', (e) => {
@@ -262,7 +269,7 @@
     slider.value = String(i);
     slider.style.setProperty('--fill', `${(i / Math.max(1, steps.length - 1)) * 100}%`);
     slider.setAttribute('aria-valuetext', `${s.label}：${s.title}`);
-    ticks.querySelectorAll('.tick').forEach((t, j) => t.toggleAttribute('aria-current', j === i) || (j === i && t.setAttribute('aria-current', 'step')));
+    ticks.querySelectorAll('.tick').forEach((t, j) => { if (j === i) t.setAttribute('aria-current', 'step'); else t.removeAttribute('aria-current'); });
     prevBtn.disabled = i === 0;
     nextBtn.disabled = i === steps.length - 1;
     $('#nowStep').textContent = s.label;

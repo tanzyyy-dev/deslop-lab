@@ -2,7 +2,9 @@
 
 AIが作ったWebサイトを、AIとの対話で一段ずつ改善していく。その過程を、実物・実際のプロンプト・修正理由とともにたどれるWebデザイン教材です。
 
-題材は、架空のAIアイドル「天音ルミ」の公式サイトです。キャラクターの設定も、最初のデザインも、AIが自由に決めました。
+題材は、架空のAIアイドル「宵越ミラ」の公式サイトです。キャラクターの設定も、最初のデザインも、AIが自由に決めました。
+
+名前は、STEP1 で AI が付けた「天音ルミ」でした。既存の作品やクリエイターと重なるため、STEP 3-4 で人間のレビュアーの判断により改名しました。STEP1〜3-3 の成果物と記録は、当時の名前のまま残しています。
 
 - **STEP1**: 最低限の要件だけを渡して、AI（Claude Haiku 5.5）に初期制作を任せた。改善実験であることは伝えていない
 - **STEP2**: 統括エージェント（Claude Opus 5.5）が「AI Slop」を調査し、観点ごとに改善を指示した。実装は Claude Haiku 5.5 が担当した
@@ -41,6 +43,7 @@ AIが作ったWebサイトを、AIとの対話で一段ずつ改善していく�
 | `step-09` | STEP 3-1 | 人間のレビュー①：実機での改行、先頭へ戻る動作、OGP |
 | `step-10` | STEP 3-2 | 人間のレビュー②：楽曲の試聴プレーヤー |
 | `step-11` | STEP 3-3 | 人間のレビュー③：意味のある動きで、華やかさと可愛らしさを |
+| `step-12` | STEP 3-4 | 人間のレビュー④：改名と、全画面サイズの総点検 |
 
 STEP2 の計画は `docs/process/step2-plan.md`、全体の振り返りと残存課題は `docs/process/step2-summary.md` にあります。
 
@@ -75,7 +78,8 @@ npx playwright install chromium   # または PW_CHANNEL=chrome でインスト�
 npm run build               # records/ から data/steps.js を生成
 npm run shots -- step-05    # 指定したステップのスクリーンショットを3画面幅で撮影（省略時は全ステップ）
 npm run check               # ビューアの動作確認（スライダー、キーボード、タブ、コピー、比較表示、3画面幅、/deslop-lab/ 配下での読み込み）
-node tools/audit.mjs step-08 # axe-core（WCAG 2.2 A/AA）によるアクセシビリティ監査
+node tools/audit.mjs step-12 # axe-core（WCAG 2.2 A/AA）によるアクセシビリティ監査
+node tools/sweep.mjs step-12 # 実機に多い17の画面サイズで、横はみ出しとヒーローの重なりを計測
 ```
 
 ステップを追加するときは、`steps/step-XX/` に成果物をコピーで保存し、`records/step-XX/meta.json` と実際のプロンプトを書いてから `npm run build` を実行します。過去のステップのフォルダは編集しません（変更していないことは `git log -- steps/step-XX` で確かめられます）。
