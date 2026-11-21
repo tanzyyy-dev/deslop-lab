@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>天音ルミ | 夜更かしするAIアイドル 公式サイト</title>
+  <meta name="description" content="電脳都市ネオ・ミナト生まれのAIアイドル、天音ルミの公式サイトです。深夜ラジオ番組「ルミの夜更かし電波」、楽曲、スケジュール、ファンレターの宛先を掲載しています。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header" id="top">
+    <a class="logo" href="#top" aria-label="トップへ戻る">
+      <span class="logo-mark">L</span>
+      <span class="logo-text">LUMI<small>AMANE</small></span>
+    </a>
+    <button class="nav-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="gnav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="gnav" class="gnav">
+      <a href="#schedule">スケジュール</a>
+      <a href="#news">ニュース</a>
+      <a href="#music">楽曲</a>
+      <a href="#profile">プロフィール</a>
+      <a href="#goods">グッズ</a>
+      <a href="#contact">ファンレター</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">AIアイドル　LM-01</p>
+        <h1 id="hero-title">
+          <span class="jp">天音ルミ</span>
+          <span class="en">LUMI AMANE</span>
+        </h1>
+        <p class="tagline">夜更かししているあなたに、今夜も一曲。</p>
+        <p class="hero-sub">天音ルミは、光でできたAIアイドルです。曲はぜんぶ自分で作っています。2027年1月からは、金曜深夜のラジオ番組も始まります。</p>
+        <div class="next-live">
+          <p class="next-live-label">次のライブ</p>
+          <p class="next-live-date"><time datetime="2027-02-14">2027.02.14（日）</time></p>
+          <p class="next-live-title">LIVE「LUMINA ECHO」</p>
+          <p class="next-live-meta">ネオ・ミナト・アリーナ / <time datetime="19:00">19:00</time> 開演</p>
+          <a class="next-live-link" href="#schedule">詳細はスケジュールへ</a>
+        </div>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#schedule">スケジュールを見る</a>
+          <a class="btn btn-ghost" href="#music">楽曲を見る</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="images/hero-night.webp" width="1600" height="900" fetchpriority="high" alt="深夜、窓辺のデスクでラジオのマイクに話しかける天音ルミ" onerror="this.classList.add('is-missing')">
+      </div>
+    </section>
+
+    <!-- LATEST: スケジュールとニュース（最新の情報として1つのまとまり） -->
+    <div class="section latest">
+      <div class="latest-grid">
+        <!-- SCHEDULE -->
+        <section id="schedule" class="latest-col">
+      <header class="section-head">
+        <h2>スケジュール</h2>
+      </header>
+      <h3 class="schedule-group">今後の予定</h3>
+      <ul class="schedule">
+        <li>
+          <time datetime="2026-12-24">2026.12.24（木）</time>
+          <div>
+            <h3>Holiday Stream Special</h3>
+            <p>オンライン配信 / <time datetime="20:00">20:00</time> 開始・無料</p>
+            <p>クリスマスイブの夜、ルミが歌を披露し、届いたおたよりを紹介します。</p>
+          </div>
+          <span class="tag tag-online">配信</span>
+        </li>
+        <li>
+          <time datetime="2027-01-08">2027.01.08（金）</time>
+          <div><h3>ラジオ番組「ルミの夜更かし電波」</h3><p>放送開始・毎週金曜 <time datetime="23:00">23:00</time>〜（ネット配信あり）</p></div>
+          <span class="tag tag-media">ラジオ</span>
+        </li>
+        <li>
+          <time datetime="2027-02-14">2027.02.14（日）</time>
+          <div><h3>LIVE「LUMINA ECHO」</h3><p>ネオ・ミナト・アリーナ / <time datetime="19:00">19:00</time> 開演</p></div>
+          <span class="tag tag-live">ライブ</span>
+        </li>
+      </ul>
+
+      <h3 class="schedule-group">終了した予定</h3>
+      <ul class="schedule schedule-past">
+        <li>
+          <time datetime="2026-11-03">2026.11.03（火）</time>
+          <div><h3>Fan Meeting「Good Night, Lumi」</h3><p>終了しました。ありがとうございました。</p></div>
+          <span class="tag tag-past">終了</span>
+        </li>
+      </ul>
+        </section>
+
+        <!-- NEWS -->
+        <section id="news" class="latest-col">
+      <header class="section-head">
+        <h2>ニュース</h2>
+      </header>
+      <ul class="news-list">
+        <li><time datetime="2026-11-18">2026.11.18（水）</time><a href="#schedule">冬のオンライン配信の詳細を公開しました</a></li>
+        <li><time datetime="2026-11-01">2026.11.01（日）</time><a href="#music">アルバム「LUMINA」の全曲解説コメントを追加</a></li>
+        <li><time datetime="2026-10-10">2026.10.10（土）</time><a href="#music">1stアルバム「LUMINA」リリース</a></li>
+        <li><time datetime="2026-09-22">2026.09.22（火）</time><a href="#goods">限定アクリルスタンドの受注を開始</a></li>
+      </ul>
+        </section>
+      </div>
+    </div>
+
+    <!-- MUSIC -->
+    <section id="music" class="section section-alt">
+      <header class="section-head">
+        <h2>楽曲</h2>
+        <p class="music-note">試聴・配信のリンクは準備中です。</p>
+      </header>
+      <article class="release release-lead">
+        <img class="jacket" src="images/jacket-lumina.webp" width="800" height="800" loading="lazy" decoding="async" alt="アルバム「LUMINA」のジャケット。プラネタリウムの床に寝転び、星座を見上げるルミ" onerror="this.classList.add('is-missing')">
+        <div class="release-text">
+          <h3>LUMINA</h3>
+          <p class="release-meta">1stアルバム　<time datetime="2026-10-10">2026.10.10（土）</time></p>
+          <p>「作曲はわたし自身です。全10曲、夜空をめぐる旅のつもりで作りました。」</p>
+        </div>
+      </article>
+      <div class="single-list">
+        <article class="release release-row">
+          <img class="jacket" src="images/jacket-midnight-signal.webp" width="800" height="800" loading="lazy" decoding="async" alt="シングル「Midnight Signal」のジャケット。深夜、ヘッドホンをしてマイクに寄りかかるルミ。手前にラジオのダイヤル" onerror="this.classList.add('is-missing')">
+          <div class="release-text">
+            <h3>Midnight Signal</h3>
+            <p class="release-meta">2ndシングル　<time datetime="2026-07-07">2026.07.07（火）</time></p>
+            <p>「深夜のラジオから流れてくる、小さな合図みたいな曲です。」</p>
+          </div>
+        </article>
+        <article class="release release-row">
+          <img class="jacket" src="images/jacket-lumen-drop.webp" width="800" height="800" loading="lazy" decoding="async" alt="シングル「Lumen Drop」のジャケット。ラムネ色の夕焼けの空の下、ラムネの瓶を掲げるルミ" onerror="this.classList.add('is-missing')">
+          <div class="release-text">
+            <h3>Lumen Drop</h3>
+            <p class="release-meta">1stシングル　<time datetime="2026-03-21">2026.03.21（土）</time></p>
+            <p>「はじめて灯った光のことを、そのまま歌にしました。」</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="profile" class="section">
+      <header class="section-head">
+        <h2>プロフィール</h2>
+      </header>
+      <div class="profile">
+        <figure class="profile-figure">
+          <img src="images/profile.webp" width="900" height="985" loading="lazy" decoding="async" alt="天音ルミの肖像。銀色がかった薄紫の長い髪に、ラムネ色の差し色" onerror="this.classList.add('is-missing')">
+        </figure>
+        <div class="profile-body">
+          <p class="profile-lead">「ひとりで光る必要はないの。あなたの光と重なったとき、いちばん綺麗になれるから。」</p>
+          <dl class="profile-table">
+            <div><dt>名前</dt><dd>天音 ルミ（あまね るみ）</dd></div>
+            <div><dt>英名</dt><dd>LUMI AMANE</dd></div>
+            <div><dt>型番</dt><dd>LM-01 / 量産番号 0001</dd></div>
+            <div><dt>設定年齢</dt><dd>17歳（登録上の誕生日は 2 月 14 日）</dd></div>
+            <div><dt>出身</dt><dd>電脳都市 ネオ・ミナト（光合成ラボ第3区）</dd></div>
+            <div><dt>身長</dt><dd>158cm（※ホログラム投影時の数値）</dd></div>
+            <div><dt>趣味</dt><dd>星空の観測、作曲、雨の日のプラネタリウム巡り</dd></div>
+            <div><dt>好きなもの</dt><dd>ラムネ色の夕焼け、ファンのみんなの感想メール</dd></div>
+            <div><dt>苦手なもの</dt><dd>停電、真っ暗な部屋での待機時間</dd></div>
+          </dl>
+          <div class="traits">
+            <span>#まっすぐ</span><span>#夜型</span><span>#好奇心旺盛</span><span>#実は泣き虫</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GOODS -->
+    <section id="goods" class="section">
+      <header class="section-head">
+        <h2>グッズ</h2>
+      </header>
+      <div class="goods-grid">
+        <article class="goods">
+          <img class="goods-img" src="images/goods-acrylic.webp" width="600" height="600" loading="lazy" decoding="async" alt="ホログラムアクリルスタンド。透明なアクリル板に描かれたルミが、ホログラムの輝きをまとって台座に立つ" onerror="this.classList.add('is-missing')">
+          <h3>ホログラムアクリルスタンド</h3>
+          <p class="goods-desc">ホログラムで輝くアクリルのスタンドです。お部屋やデスクに飾れます。</p>
+          <p class="price">¥2,200（税込）</p>
+          <p class="goods-stock stock-low">残りわずか</p>
+        </article>
+        <article class="goods">
+          <img class="goods-img" src="images/goods-penlight.webp" width="600" height="600" loading="lazy" decoding="async" alt="ルミ公式ペンライト。淡いラムネ色に光る細身のペンライト" onerror="this.classList.add('is-missing')">
+          <h3>ルミ公式ペンライト</h3>
+          <p class="goods-desc">ライブ会場で振って、ルミと一緒に光を灯すためのペンライトです。</p>
+          <p class="price">¥3,300（税込）</p>
+          <p class="goods-stock stock-on">在庫あり</p>
+        </article>
+        <article class="goods">
+          <img class="goods-img" src="images/goods-tee.webp" width="600" height="600" loading="lazy" decoding="async" alt="Starlight Tシャツ。紺色の生地に、星座をイメージした白い点と線が散らされたデザイン" onerror="this.classList.add('is-missing')">
+          <h3>Starlight Tシャツ</h3>
+          <p class="goods-desc">星空をイメージしたデザインのTシャツです。普段着にどうぞ。</p>
+          <p class="price">¥4,400（税込）</p>
+          <p class="goods-stock stock-on">在庫あり</p>
+        </article>
+        <article class="goods">
+          <img class="goods-img" src="images/goods-card.webp" width="600" height="600" loading="lazy" decoding="async" alt="ランダム ホロカード。ホログラムに輝く5枚のカードが扇状に並ぶ" onerror="this.classList.add('is-missing')">
+          <h3>ランダム ホロカード（全8種）</h3>
+          <p class="goods-desc">どの絵柄が出るかはランダムです。全8種のうち1枚が入ります。</p>
+          <p class="price">¥550（税込）</p>
+          <p class="goods-stock stock-soldout">売り切れ（再販は未定です）</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section section-alt">
+      <header class="section-head">
+        <h2>ファンレター・おたより</h2>
+      </header>
+      <div class="contact">
+        <div>
+          <p>「届いた手紙を読むのが、いちばんの楽しみなの。感想でも、ちょっとした日記でも、ぜんぶ大事に読むね。」</p>
+          <address>
+            電脳都市ネオ・ミナト 光合成ラボ第3区　天音ルミ 宛
+          </address>
+        </div>
+        <div>
+          <p>ラジオ番組「ルミの夜更かし電波」へのおたよりは、番組内で紹介します。投稿の際は、ハッシュタグ「#ルミの夜更かし電波」を付けてください。</p>
+          <p><small>お仕事のご相談：天音ルミ・プロジェクト運営事務局　contact@example.com</small></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-logo">LUMI AMANE</p>
+    <p>&copy; 2026 天音ルミ・プロジェクト</p>
+    <p>このサイトに登場する人物・団体・地名・イベントはすべて架空のものです。</p>
+    <a href="#top">ページの先頭へ</a>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

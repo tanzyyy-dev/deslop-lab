@@ -397,5 +397,75 @@ window.DESLOP_STEPS = [
       "tablet": "screenshots/step-06/tablet.jpg",
       "desktop": "screenshots/step-06/desktop.jpg"
     }
+  },
+  {
+    "label": "STEP 2-6",
+    "short": "画像",
+    "phase": "STEP2",
+    "title": "画像：同じキャラクター、同じ夜で揃える",
+    "theme": "画像（チェックリスト C8）",
+    "date": "2026-11-21",
+    "models": [
+      "Claude Opus 5.5（画像の企画・生成プロンプトの作成・選定・指示書の作成・レビュー）",
+      "Codex CLI 0.163.0 内蔵の画像生成（8枚。STEP1 のプロフィール画像を参照画像として添付）",
+      "Claude Haiku 5.5（変換・組み込みの実装）"
+    ],
+    "summary": "STEP1 のネオンの都市のヒーロー画像を、コンセプト「夜更かしの周波数」に沿った新しい画像に差し替えた。深夜、窓辺のデスクでラジオのマイクに向かうルミの絵。あわせて、空のままだったジャケット3枚とグッズ4点の画像を、同じキャラクター・同じ色調で生成して組み込んだ。画像の合計サイズは約 6.9MB（PNG）から約 0.5MB（WebP）に減った。",
+    "reason": [
+      "前のステップで、言葉・書体・色・レイアウトは静かな深夜の方向にそろった。しかし画面の半分以上を占めるヒーロー画像だけが、STEP1 のネオンの都市のままだった。",
+      "ジャケットとグッズの空の面は、STEP1 ではグラデーションの仮画像だった。中身のない飾りの典型（調査の「飾りの置き場」）。",
+      "画像を変えるときに最も重要なのは、同じキャラクターに見えること。STEP1 のプロフィール画像を参照画像として Codex に渡し、髪・目・服の特徴を保つよう指示した。全画像に同じ「色の制約」（藍・ラムネ・ランプの黄色、発光なし）を付けた。",
+      "STEP1 の画像は1枚約2MBで、表示サイズに対して大きすぎた。読み込みの重さは、ファンがスマホで予定を確かめる場面で直接の不便になる。"
+    ],
+    "changes": [
+      "ヒーロー画像を差し替え（hero.png → hero-night.webp）。変更理由: ネオンの都市の絵が、ほかの要素で確立したコンセプトと食い違っていたため",
+      "楽曲のジャケット3枚を新規に生成して組み込み（LUMINA: プラネタリウムで星座を見上げるルミ、Midnight Signal: 深夜のラジオのマイク、Lumen Drop: ラムネ色の夕焼けとラムネの瓶）。仮の番号（01〜03）は削除",
+      "グッズの商品写真4点を新規に生成して組み込み（アクリルスタンド、ペンライト、Tシャツ、ホロカード）",
+      "プロフィール画像は STEP1 のものを内容を変えずに残し、形式だけ WebP に変換した（キャラクターの元になった画像のため）",
+      "すべての画像を WebP に変換し、表示サイズに合わせて縮小（tools/optimize-images.py）。img に width / height を指定し、画面外の画像は遅延読み込みにした",
+      "代替テキストを、画像が伝える内容を具体的に表すものに書き直した",
+      "生成した画像の原本（PNG）と生成プロンプトを records/step-07/generated/ に保存した。サイトで使う WebP の隣にも、生成記録（*.prompt.md）を置いた"
+    ],
+    "result": "意図どおり。8枚とも同じキャラクターに見え（三つ編み、三角の髪飾り、白と紺の上着）、色調もパレットとそろった。ヒーロー画像の左側は暗い壁として生成したため、文字の読みやすさも保てている。画像フォルダは約 520KB（STEP 2-5 は約 6.9MB）。",
+    "evaluation": [
+      {
+        "check": "残った課題",
+        "finding": "プロフィール画像は STEP1 のまま。後光や発光する線の描写があり、ほかの画像よりややネオン寄り。キャラクターの基準画像として残したが、STEP3 の人間のレビューで判断を仰ぐ余地がある。アクセシビリティの細部（コントラスト、スキップリンク、タップ領域）と、メタ情報（OGP、favicon）は次のステップで扱う。"
+      }
+    ],
+    "issues": [
+      {
+        "title": "画像生成スクリプトが止まった（実装の前段で統括エージェントが対処）",
+        "detail": "1回目は、参照画像の相対パスが作業フォルダの移動で解決できず、画像が生成されなかった。2回目は、codex exec の -i オプションが複数の値を取るため、プロンプトまで画像ファイル名として扱われ、標準入力の待ちで止まった。tools/gen-image.sh で、参照画像のパスを絶対パスにし、-i をプロンプトの後ろに置く修正をして解消した。生成された画像そのものには影響していない。"
+      }
+    ],
+    "notes": [
+      "Codex CLI の画像生成は、ChatGPT アカウントでのログインに含まれる機能を使った。追加の API 課金は発生していない。",
+      "STEP1 の hero.png と stage.png は、STEP1〜2-5 の各フォルダに当時のまま残っている。"
+    ],
+    "prompts": [
+      {
+        "label": "改善指示（Claude Haiku 5.5 へ）",
+        "file": "records/step-07/prompt.md",
+        "text": "あなたは静的Webサイトの改善を担当します。\n\n対象ディレクトリ: /Users/ttan/dev/deslop-lab/steps/step-07\nこのディレクトリ内のファイルだけを編集してください。ほかのディレクトリ（steps/step-01〜06、records/ など）は絶対に変更しないでください（records/ からは読み取りだけ行います）。\n\nこれは架空のAIアイドル「天音ルミ」の公式サイトです。今回の改善テーマは「画像」です。色、書体、文章、レイアウトの構成は変えないでください。\n\n## 背景\n- ヒーロー画像（images/hero.png）は、STEP1 で作られたネオンの都市の画像です。その後、サイトは「夜更かしの周波数」（深夜ラジオ、星空、静かな部屋の灯り）というコンセプトで、色も書体も静かな方向へ整えてきました。そのため、画面の半分以上を占めるこの画像だけが、強く浮いています。\n- 楽曲のジャケットとグッズの画像は、空の仮の面のままです。\n- 画像はすべて約2MBの PNG で、表示サイズに対して大きすぎます。\n\n統括エージェントが、Codex CLI の画像生成で、同じキャラクター（STEP1 のプロフィール画像を参照画像として添付）・同じ世界観の画像8枚を生成しました。原本と生成プロンプトは次の場所にあります（読み取り専用）。\n/Users/ttan/dev/deslop-lab/records/step-07/generated/\n- hero.png（1672×941。深夜、窓辺のデスクでラジオのマイクに話しかけるルミ。画像の左3分の1は暗い壁）\n- jacket-lumina.png（プラネタリウムの床に寝転び、星座を見上げるルミ）\n- jacket-midnight-signal.png（深夜、ヘッドホンをしてマイクに寄りかかるルミ。手前にラジオのダイヤル）\n- jacket-lumen-drop.png（ラムネ色の夕焼けの空の下、ラムネの瓶を掲げるルミ）\n- goods-acrylic.png / goods-penlight.png / goods-tee.png / goods-card.png（グッズの商品写真）\n\n## 作業\n1. 画像の変換\n   次のコマンドで、原本を WebP に変換し、steps/step-07/images/ に保存してください（リポジトリのルート /Users/ttan/dev/deslop-lab で実行）。\n   ```\n   python3 tools/optimize-images.py <原本.png> <出力.webp> <最大幅> 80\n   ```\n   - hero.png → images/hero-night.webp（最大幅 1600）\n   - jacket-*.png → images/jacket-lumina.webp / jacket-midnight-signal.webp / jacket-lumen-drop.webp（最大幅 800）\n   - goods-*.png → images/goods-acrylic.webp / goods-penlight.webp / goods-tee.webp / goods-card.webp（最大幅 600）\n   - STEP1 のプロフィール画像 steps/step-07/images/profile.png → images/profile.webp（最大幅 900）。この画像は内容を変えず、形式とサイズだけ変える\n   各 WebP の隣に、原本の生成記録をコピーしてください（例: records/step-07/generated/hero.prompt.md → images/hero-night.prompt.md）。profile.prompt.md はすでにあるので、そのまま残します。\n   変換後、使わなくなった steps/step-07/images/hero.png、hero.prompt.md、profile.png を削除してください（STEP1〜2-5 の各フォルダには元の画像が残っています）。\n\n2. HTML への組み込み\n   - ヒーロー: img の src を images/hero-night.webp にします。ルミは画像の右半分にいるので、object-position を調整し、PC幅でもスマホ幅（4:3 の切り抜き）でも顔が切れないようにしてください。PC幅の左側の暗い幕は、新しい画像の左側がもともと暗いため、弱めてかまいません。ただし、文字の読みやすさは保ってください。\n   - 楽曲: 各作品の仮の面（div.jacket と中の番号）を img 要素に置き換えます。番号（01〜03）は削除します。\n   - グッズ: 各商品の仮の面（div.goods-img）を img 要素に置き換えます。\n   - プロフィール: src を images/profile.webp にします。\n   - すべての img に width と height（WebP の実寸）を指定してください（レイアウトのずれを防ぐため）。表示位置が画面の下の方の画像には loading=\"lazy\" と decoding=\"async\" を付けます。ヒーロー画像には付けず、fetchpriority=\"high\" を付けます。\n   - 代替テキスト（alt）は、画像が伝える内容を日本語で具体的に書いてください。\n     - ヒーロー: 「深夜、窓辺のデスクでラジオのマイクに話しかける天音ルミ」\n     - ジャケット: 「アルバム『LUMINA』のジャケット。プラネタリウムの床に寝転び、星座を見上げるルミ」のように、作品名と絵の内容を書く\n     - グッズ: 商品名と見た目（例: 「ルミ公式ペンライト。淡いラムネ色に光る細身のペンライト」）\n     - プロフィール: 「天音ルミの肖像。銀色がかった薄紫の長い髪に、ラムネ色の差し色」\n   - 不要になった .jacket / .goods-img の背景・枠・番号のスタイルは削除し、img が正方形で表示されるようにしてください（aspect-ratio: 1; object-fit: cover; 角丸 2px）。\n   - onerror=\"this.classList.add('is-missing')\" は、すべての img に付けたままにしてかまいません。\n\n## 完了条件\n- すべての画像が表示されること（パスの誤りがないこと）。HTML の構造が正しいこと。\n- steps/step-07/images/ に PNG が残っていないこと。images フォルダの合計サイズを報告すること。\n- 最後に、変更点の一覧と、迷った点・意図どおりにできなかった点を報告してください。"
+      },
+      {
+        "label": "画像生成スクリプト（8枚分のプロンプトを含む）",
+        "file": "records/step-07/generated/generate.sh",
+        "text": "#!/usr/bin/env bash\n# STEP 2-6 image batch (sequential). Skips files that already exist.\nset -uo pipefail\ncd /Users/ttan/dev/deslop-lab\nO=/private/tmp/claude-501/-Users-ttan-dev-deslop-lab/31e09667-ee60-47e1-b556-30f625fe2c94/scratchpad/img26\nmkdir -p $O\nREF=steps/step-01/images/profile.png\nSTYLE=\"Anime-style illustration with soft painterly lighting. Quiet late-night mood. Limited palette: deep indigo night, pale ramune-soda aqua, and warm desk-lamp yellow as the only warm accent. No neon glow, no lens flares, no rainbow gradients. No text, no letters, no logos, no watermark.\"\nCHAR=\"The character is Lumi, an original fictional AI idol girl: long silver-lavender hair with pale aqua streaks, blue eyes, white jacket with navy lining, small white headset.\"\ng() { [[ -f \"$O/$1\" ]] && { echo \"skip $1\"; return; }; tools/gen-image.sh \"$O/$1\" \"$2\" ${3:-} || echo \"FAILED $1\"; }\ng hero.png \"$CHAR She sits at a small desk by a window late at night, wearing over-ear headphones, speaking softly into a vintage radio microphone. A warm desk lamp lights her face; a hand-drawn star chart is pinned on the wall; through the rain-streaked window a few distant city lights. She glances toward the viewer with a gentle smile. Wide 16:9 composition, character placed in the right half, the left third is calm dark wall suitable for overlaying text. $STYLE\" $REF\ng jacket-lumen-drop.png \"Square single cover art. $CHAR At dusk under a pale ramune-coloured sunset sky, she holds up a glass ramune soda bottle; a single drop of light falls inside the bottle. Upper body, calm expression, simple uncluttered composition with sky as background. $STYLE\" $REF\ng jacket-midnight-signal.png \"Square single cover art. $CHAR Midnight in a dark room, she leans toward a radio microphone with headphones on; a small warm 'on air' lamp glows (no text on it); a radio dial with a frequency scale (no readable text) in the foreground. Intimate close-up, mostly dark indigo with one warm light. $STYLE\" $REF\ng jacket-lumina.png \"Square album cover art. $CHAR She lies on her back on the floor of an empty planetarium, seen from above, hair spread out, looking up at a dome full of constellations drawn with thin lines. Calm, dreamy, wide negative space of star field. $STYLE\" $REF\ng goods-acrylic.png \"Product photo of a clear acrylic standee of an anime character (the character from the reference, full body, waving), standing on a wooden desk next to a small desk lamp at night, shallow depth of field, realistic product photography, plain dark background, square. No text, no logos, no watermark.\" $REF\ng goods-penlight.png \"Product photo of a slim concert penlight glowing pale aqua, lying diagonally on a dark indigo fabric surface, realistic product photography, soft reflections, square, minimal composition. No text, no logos, no watermark.\"\ng goods-tee.png \"Flat-lay product photo of a navy blue T-shirt with a small white line-drawn star-chart constellation print on the chest, on a light grey surface, realistic product photography, square. No text, no letters, no logos, no watermark.\"\ng goods-card.png \"Product photo of five holographic trading cards fanned out on a dark desk, each card showing a different small illustration of the same anime idol girl (from the reference), subtle holographic sheen, realistic product photography, square. No readable text, no logos, no watermark.\" $REF\nls -la $O"
+      },
+      {
+        "label": "実装エージェントの完了報告（原文）",
+        "file": "records/step-07/agent-report.md",
+        "text": "# STEP 2-6 実装エージェントの完了報告（原文ママ）\n\n実装: Claude Haiku 5.5（サブエージェント）\n\n---\n\nsteps/step-07 の画像改善を完了しました。編集は steps/step-07/ 内のみで、records/ と他のステップは変更していません（コミットもしていません）。\n\n**1. 画像の変換（steps/step-07/images/）**\n- tools/optimize-images.py で WebP に変換（品質 80）。hero-night.webp 1600×900、jacket-lumina / jacket-midnight-signal / jacket-lumen-drop 各 800×800、goods-acrylic / goods-penlight / goods-tee / goods-card 各 600×600、profile.webp 900×985。\n- 生成記録を各 WebP の隣にコピー（hero-night.prompt.md、jacket-*.prompt.md、goods-*.prompt.md）。profile.prompt.md は既存のまま。\n- 削除: hero.png、hero.prompt.md、profile.png。images/ に PNG は残っていません。\n- images/ の合計: 約 474 KiB（WebP 計 約 468 KiB、プロンプト記録含む）。削除前は hero.png と profile.png で約 4.5 MB あったので、大幅に軽くなっています。\n\n**2. HTML（index.html）**\n- ヒーロー: src を hero-night.webp に変更。width/height 1600×900、fetchpriority=\"high\"、lazy なし。\n- 楽曲: 3 つの div.jacket と番号 01〜03 を img.jacket に置き換え（800×800、loading/decoding 付き）。\n- グッズ: 4 つの div.goods-img を img.goods-img に置き換え（600×600、loading/decoding 付き）。\n- プロフィール: profile.webp（900×985、lazy）。\n- alt は指示どおり日本語で書き、ジャケットとグッズは記録の内容と実画像（コンタクトシートで確認）が一致することを確かめてから書きました。\n- タグの対応を確認し、画像パスはすべて存在します。\n\n**3. CSS（css/style.css）**\n- ヒーローの object-position: PC は `100% 30%`（ルミは右側にいるため、どの比率でも顔が残る位置）、スマホ（4:3 切り抜き）は `92% center`。\n- .jacket / .goods-img: 背景・枠・番号のスタイルを削除し、aspect-ratio 1:1、object-fit: cover、角丸 2px、幅 100% に変更。.jacket span 系のルールも削除。\n- 色、書体、文章、レイアウトの構成は変更していません。\n\n**4. 確認**\n- Chrome（インストール済み）で PC 1366px とスマホ 390px のスクリーンショットを撮影し、ヒーローでルミの顔が切れていないこと、文字が読めることを確認。両幅とも横スクロールなし。\n- 楽曲・グッズのセクションも表示を確認（正方形で表示、すべて読み込み成功）。\n- スクリーンショットは scratchpad に保存し、リポジトリには出していません。repo 付属の tools/screenshot.mjs は screenshots/ をリポジトリ直下に書き出すため使いませんでした。\n\n**迷った点・意図どおりにできなかった点**\n- ヒーロー左側の暗い幕（linear-gradient）は、今回は弱めていません。新しい画像の左側は元から暗く、確認した表示でも文字は十分読めたためです。さらに薄くすることは可能です。\n- タブレット幅（820px）は撮影していません。ヒーローは 721〜1023px のとき幕の配分が別になっているので、必要なら確認してください。\n- 画像は lazy 読み込みのため、楽曲・グッズは初期表示のスクリーンショットに含まれませんでした。セクションを個別に撮って確認しています。"
+      }
+    ],
+    "id": "step-07",
+    "site": "steps/step-07/index.html",
+    "screenshots": {
+      "mobile": "screenshots/step-07/mobile.jpg",
+      "tablet": "screenshots/step-07/tablet.jpg",
+      "desktop": "screenshots/step-07/desktop.jpg"
+    }
   }
 ];
