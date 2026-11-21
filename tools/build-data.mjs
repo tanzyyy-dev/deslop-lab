@@ -17,7 +17,7 @@ const steps = dirs.map((d) => {
   }));
   const shots = {};
   for (const v of ['mobile', 'tablet', 'desktop']) {
-    const f = `screenshots/${d}/${v}.png`;
+    const f = `screenshots/${d}/${v}.jpg`;
     if (fs.existsSync(path.join(root, f))) shots[v] = f;
   }
   const site = `steps/${d}/index.html`;

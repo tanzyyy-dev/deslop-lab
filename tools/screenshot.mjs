@@ -1,6 +1,6 @@
 // Takes full-page screenshots of steps/<id>/index.html at three viewport sizes.
 // usage: node tools/screenshot.mjs [step-01 step-02 ...]   (default: all steps)
-// Output: screenshots/<id>/{mobile,tablet,desktop}.png  (+ console errors are reported)
+// Output: screenshots/<id>/{mobile,tablet,desktop}.jpg  (+ console errors are reported)
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -34,7 +34,7 @@ for (const id of ids) {
     });
     await page.waitForTimeout(400);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-    await page.screenshot({ path: path.join(root, 'screenshots', id, `${name}.png`), fullPage: true });
+    await page.screenshot({ path: path.join(root, 'screenshots', id, `${name}.jpg`), fullPage: true, type: 'jpeg', quality: 80 });
     const msg = [];
     if (overflow > 0) msg.push(`horizontal overflow ${overflow}px`);
     if (errors.length) msg.push(`errors: ${errors.join(' | ')}`);
