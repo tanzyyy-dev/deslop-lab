@@ -250,6 +250,7 @@ input[type="range"]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(
 }
 .prompt-src { font-size: 12px; color: var(--muted); padding: 6px 12px; border-top: 1px solid var(--line); }
 
+.review { margin: 0 0 10px; padding: 12px 14px; background: var(--accent-soft); border-radius: var(--radius); white-space: pre-wrap; }
 .report { border: 1px solid var(--line); border-radius: var(--radius); background: var(--code-bg); }
 .report summary { cursor: pointer; padding: 10px 12px; font-size: 13px; min-height: 40px; }
 .report pre { margin: 0; padding: 12px; max-height: 460px; overflow: auto; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 12.5px; line-height: 1.65; white-space: pre-wrap; word-break: break-word; }

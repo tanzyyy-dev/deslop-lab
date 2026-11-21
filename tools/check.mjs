@@ -109,5 +109,13 @@ try {
   await browser.close();
   server.kill();
 }
+// no local absolute paths in tracked text files (public repository)
+{
+  const { execFileSync } = await import('node:child_process');
+  const files = execFileSync('git', ['ls-files'], { cwd: root, encoding: 'utf8' }).split('\n')
+    .filter((f) => f && /\.(md|json|js|mjs|html|css|sh|py|txt|svg)$/.test(f) && f !== 'package-lock.json' && f !== 'tools/check.mjs');
+  const leaks = files.filter((f) => /\/Users\/|\/private\/tmp\/|\/home\/[a-z]/.test(fs.readFileSync(path.join(root, f), 'utf8')));
+  ok(leaks.length === 0, `no local absolute paths in tracked files ${leaks.join(', ')}`);
+}
 if (fails.length) { console.error(`\n${fails.length} check(s) failed`); process.exit(1); }
 console.log('\nall checks passed');

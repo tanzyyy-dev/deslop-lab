@@ -4,7 +4,7 @@
 
 ---
 
-指示書 /Users/ttan/dev/deslop-lab/records/step-06/prompt.md に従い、/Users/ttan/dev/deslop-lab/steps/step-06 のレイアウトを改善しました。指示書と records/ は編集していません。steps/step-01〜05 も変更していません。コミットはしていません。
+指示書 <リポジトリ>/records/step-06/prompt.md に従い、<リポジトリ>/steps/step-06 のレイアウトを改善しました。指示書と records/ は編集していません。steps/step-01〜05 も変更していません。コミットはしていません。
 
 ## 変更点
 
@@ -40,7 +40,7 @@
 - **試聴の注記**: 負の margin を避けるため、注記を楽曲の section-head の中に移しました（見出しの直下に置く案）。
 - **ヒーローの幕**: 不透明度は左端 0.92、中央 0 の linear-gradient ですが、--bg の値は color-mix(in srgb, var(--bg) 92%, transparent) で指定しています。
 - **未検証**: Google Fonts の読み込みはネットワークの都合で確認していません（フォールバックのフォントで計測）。1024px 付近のブレークポイントは計測していません。
-- **ロールバック用の控え**: 変更前の step-06 は /private/tmp/claude-501/-Users-ttan-dev-deslop-lab/31e09667-ee60-47e1-b556-30f625fe2c94/scratchpad/step-06-orig にあります。
+- **ロールバック用の控え**: 変更前の step-06 は <作業用一時フォルダ>/step-06-orig にあります。
 
 ---
 

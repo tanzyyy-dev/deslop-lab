@@ -4,7 +4,7 @@
 
 ---
 
-指示書 /Users/ttan/dev/deslop-lab/records/step-04/prompt.md に従い、/Users/ttan/dev/deslop-lab/steps/step-04 の index.html と css/style.css を編集しました。指示書自体、steps/step-01〜03、他のファイルは変更していません。ブラウザでの表示確認はしていません（構文と指定の機械的な確認のみ）。コミットはしていません。
+指示書 <リポジトリ>/records/step-04/prompt.md に従い、<リポジトリ>/steps/step-04 の index.html と css/style.css を編集しました。指示書自体、steps/step-01〜03、他のファイルは変更していません。ブラウザでの表示確認はしていません（構文と指定の機械的な確認のみ）。コミットはしていません。
 
 ## 変更点
 

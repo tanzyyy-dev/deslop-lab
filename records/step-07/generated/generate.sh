@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # STEP 2-6 image batch (sequential). Skips files that already exist.
 set -uo pipefail
-cd /Users/ttan/dev/deslop-lab
-O=/private/tmp/claude-501/-Users-ttan-dev-deslop-lab/31e09667-ee60-47e1-b556-30f625fe2c94/scratchpad/img26
+cd <リポジトリ>
+O=<作業用一時フォルダ>/img26
 mkdir -p $O
 REF=steps/step-01/images/profile.png
 STYLE="Anime-style illustration with soft painterly lighting. Quiet late-night mood. Limited palette: deep indigo night, pale ramune-soda aqua, and warm desk-lamp yellow as the only warm accent. No neon glow, no lens flares, no rainbow gradients. No text, no letters, no logos, no watermark."

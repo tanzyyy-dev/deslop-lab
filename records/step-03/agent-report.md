@@ -4,7 +4,7 @@
 
 ---
 
-指示書 (/Users/ttan/dev/deslop-lab/records/step-03/prompt.md) に沿って、/Users/ttan/dev/deslop-lab/steps/step-03/ の文章を改善しました。変更したのは次の3ファイルだけです: steps/step-03/index.html、steps/step-03/js/main.js、steps/step-03/css/style.css。指示書と他ディレクトリは編集していません。コミットはしていません。
+指示書 (<リポジトリ>/records/step-03/prompt.md) に沿って、<リポジトリ>/steps/step-03/ の文章を改善しました。変更したのは次の3ファイルだけです: steps/step-03/index.html、steps/step-03/js/main.js、steps/step-03/css/style.css。指示書と他ディレクトリは編集していません。コミットはしていません。
 
 検証: main.js は node --check で構文OK。index.html はタグの閉じ忘れ・不一致なし。削除した form や .audio-note への参照は残っていません（goods-a は背景用の現役クラス）。ブラウザでの表示確認はしていません。
 

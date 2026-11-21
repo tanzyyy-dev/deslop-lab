@@ -174,7 +174,9 @@
     const pane = $('#pane-overview');
     pane.replaceChildren(
       el('p', { class: 'lead', text: s.summary }),
-      el('h2', { text: s.phase === 'STEP1' ? 'このステップの位置づけ' : 'なぜ直すのか' }),
+      s.review ? el('h2', { text: 'レビュアー（人間）の指摘・原文' }) : null,
+      s.review ? el('blockquote', { class: 'review', text: s.review }) : null,
+      el('h2', { text: s.phase === 'STEP1' ? 'このステップの位置づけ' : s.phase === 'STEP3' ? '原因と直し方' : 'なぜ直すのか' }),
       list(s.reason),
       s.result ? el('h2', { text: '結果' }) : null,
       s.result ? el('p', { text: s.result }) : null,

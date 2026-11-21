@@ -6,7 +6,7 @@
 
 架空のAIバーチャルアイドル「天音ルミ（LUMI AMANE）」の公式サイトを作成しました。ブラウザで index.html を開けば表示でき、外部サーバー・API・ビルドには依存しません（Google Fonts 等も不使用）。
 
-■ 作成したファイル（すべて /private/tmp/claude-501/-Users-ttan-dev-deslop-lab/31e09667-ee60-47e1-b556-30f625fe2c94/scratchpad/work/idol-site/ 配下）
+■ 作成したファイル（すべて <作業用一時フォルダ>/work/idol-site/ 配下）
 - index.html（構成・文言すべて）
 - css/style.css（デザイン・レスポンシブ対応）
 - js/main.js（モバイルメニュー、ライブまでのカウントダウン、ファンレターフォームのデモ動作）
