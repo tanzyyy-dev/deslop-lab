@@ -98,9 +98,18 @@ node tools/audit.mjs step-08 # axe-core（WCAG 2.2 A/AA）によるアクセシ�
   - `<作業用一時フォルダ>` … 統括エージェントのセッション用の一時フォルダ（STEP1 の制作は、リポジトリの外のこのフォルダで行った）
 - `npm run check` は、追跡中のファイルにローカルの絶対パスが含まれていないことも確認します
 
+## ライセンス / License
+
+- **ソースコード / Source code:** [MIT License](LICENSE) — ソフトウェア実装の改変・再利用・商用利用が可能です。
+- **作品コンテンツ・素材 / Content and assets:** [利用条件 / Content and Asset Usage Terms](CONTENT_LICENSE.md) — キャラクター、画像、楽曲等はMITの対象外で、素材の無断利用は認めません。
+
+出典を明記した作品紹介・レビュー用のスクリーンショット掲載、および教材のプロンプトの学習・再利用は認めています。詳しくは上記の利用条件を参照してください。
+
+The software implementation is available under the MIT License. Characters, images, music, and other creative content are excluded from MIT. Attributed screenshots for project reviews or introductions and reuse of educational prompts are permitted as described in the Content and Asset Usage Terms.
+
 ## 権利について
 
-- 天音ルミと、サイトに登場する人物・団体・地名・イベントはすべて架空のものです
+- サイトに登場するキャラクター、人物・団体・地名・イベントはすべて架空のものです
 - 画像はすべて Codex CLI で新たに生成したものです。STEP1 のステージ画像には、別のキャラクターに見える人物が写っていました。そのため STEP 2-1 で削除しました（記録は `records/step-02/`）
 - フォントは Google Fonts の SIL Open Font License の書体を使っています
 - 楽曲（`assets/*.mp3`、`steps/step-10/audio/`）は、レビュアー（リポジトリの管理者）が用意した音源です。各ステップのフォルダを独立させるため、STEP 3-2 のフォルダにはコピーを置いています
