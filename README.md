@@ -39,6 +39,7 @@ AIが作ったWebサイトを、AIとの対話で一段ずつ改善していく�
 | `step-07` | STEP 2-6 | 画像：同じキャラクター、同じ夜で揃える |
 | `step-08` | STEP 2-7 | アクセシビリティと仕上げ |
 | `step-09` | STEP 3-1 | 人間のレビュー①：実機での改行、先頭へ戻る動作、OGP |
+| `step-10` | STEP 3-2 | 人間のレビュー②：楽曲の試聴プレーヤー |
 
 STEP2 の計画は `docs/process/step2-plan.md`、全体の振り返りと残存課題は `docs/process/step2-summary.md` にあります。
 
@@ -101,3 +102,4 @@ node tools/audit.mjs step-08 # axe-core（WCAG 2.2 A/AA）によるアクセシ�
 - 天音ルミと、サイトに登場する人物・団体・地名・イベントはすべて架空のものです
 - 画像はすべて Codex CLI で新たに生成したものです。STEP1 のステージ画像には、別のキャラクターに見える人物が写っていました。そのため STEP 2-1 で削除しました（記録は `records/step-02/`）
 - フォントは Google Fonts の SIL Open Font License の書体を使っています
+- 楽曲（`assets/*.mp3`、`steps/step-10/audio/`）は、レビュアー（リポジトリの管理者）が用意した音源です。各ステップのフォルダを独立させるため、STEP 3-2 のフォルダにはコピーを置いています

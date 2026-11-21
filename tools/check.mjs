@@ -99,7 +99,7 @@ try {
     const p = await ctx.newPage();
     p.on('response', (r) => { if (r.status() >= 400) bad.push(`${r.status()} ${r.url()}`); });
     p.on('pageerror', (e) => bad.push(String(e)));
-    await p.goto(base + s.site, { waitUntil: 'networkidle' });
+    await p.goto(base + s.site, { waitUntil: 'load' }); await p.waitForTimeout(500);
     for (const f of s.shots) { const r = await p.request.get(base + f); if (!r.ok()) bad.push(`${r.status()} ${f}`); }
     ok(bad.length === 0, `${s.id} snapshot + screenshots load under /deslop-lab/ ${bad.join(' | ')}`);
     await p.close();
