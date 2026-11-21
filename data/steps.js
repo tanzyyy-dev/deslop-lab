@@ -196,5 +196,73 @@ window.DESLOP_STEPS = [
       "tablet": "screenshots/step-03/tablet.jpg",
       "desktop": "screenshots/step-03/desktop.jpg"
     }
+  },
+  {
+    "label": "STEP 2-3",
+    "short": "書体",
+    "phase": "STEP2",
+    "title": "タイポグラフィ：書体に役割を持たせる",
+    "theme": "タイポグラフィ（チェックリスト C4）",
+    "date": "2026-11-21",
+    "models": [
+      "Claude Opus 5.5（書体の選定・指示書の作成・レビュー）",
+      "Claude Haiku 5.5（実装）"
+    ],
+    "summary": "システムフォントと Helvetica だけの組版から、役割の異なる3書体に切り替えた。見出しは丸ゴシック、本文は角ゴシック、日付と時刻だけはドット書体にした。あわせて、毎セクションで重複していた英字の小見出しを削除し、サイズの差をはっきりさせた。",
+    "reason": [
+      "システムフォントのままでは、サイトの声が出ない。調査では、書体の変更が最も効果の大きい修正だと複数の出典が挙げていた（HEY World、Cookbook）。",
+      "書体はコンセプト「夜更かしの周波数」から選んだ。名前と見出しには、アイドルの声のやわらかさを出すため丸ゴシック（Zen Maru Gothic）を使う。本文は長く読んでも疲れない角ゴシック（Zen Kaku Gothic New）にした。日付・時刻には、ラジオの表示窓を思わせるドット書体（DotGothic16）を使い、ほかの場所には使わない。",
+      "字間を広げた英字の小見出し（SCHEDULE など）と日本語の見出しの組み合わせは、調査で挙がった「テンプレート的な装飾」の典型。内容も直後の見出しと重複していた。",
+      "Cookbook の助言（サイズの差は1.5倍ではなく3倍以上に）に沿って、名前と見出し、見出しと本文の差を大きくした。"
+    ],
+    "changes": [
+      "Google Fonts（SIL Open Font License）から Zen Maru Gothic / Zen Kaku Gothic New / DotGothic16 を読み込み、フォールバック付きの CSS 変数 3つにまとめた",
+      "\"Helvetica Neue\" / Arial の指定をすべて削除",
+      "名前を最大 7.5rem・ウェイト 900 に変更。見出しは clamp() で画面幅に応じて調整し、本文は 16px・行間 1.9・1行あたり最大約36文字にした",
+      "英字の小見出し6つ（SCHEDULE / NEWS / MUSIC / PROFILE / GOODS / CONTACT）を削除",
+      "日付と時刻を <time> で囲み、ドット書体を適用",
+      "見出しに palt（プロポーショナル詰め）、text-wrap: balance、word-break: auto-phrase を指定し、文節単位で改行するようにした。本文には palt を使わず、text-wrap: pretty と禁則（line-break: strict）を指定した",
+      "0.8125rem（13px）未満の文字をなくした"
+    ],
+    "result": "書体の役割分担は意図どおりになった。スマホ幅では、キャッチコピーが「夜更かししている／あなたに、今夜も一曲。」と文節で改行されるようになった。一方、楽曲セクションの注記が左端に寄る崩れが見つかり、再指示で修正した。名前のグラデーション文字と、発光するボタンはまだ残っている（色は次のステップで扱う）。",
+    "evaluation": [
+      {
+        "check": "残った課題",
+        "finding": "書体は静かな夜の雰囲気になったが、色（シアン→紫→ピンクのグラデーション、発光）が書体の印象と食い違っている。次のステップで色と装飾を整理する。"
+      }
+    ],
+    "issues": [
+      {
+        "title": "楽曲セクションの注記だけが左端に寄っていた（再指示1回）",
+        "detail": "スクリーンショットで確認したところ、PC幅で「試聴・配信のリンクは準備中です。」だけが x≈19px に表示され、見出し（x≈107px）と揃っていなかった。調べると、この崩れは STEP 2-2 で追加された `.music-note { margin: -24px 0 32px }` によるもので、STEP 2-2 のレビューで統括エージェントが見落としていた（STEP 2-2 の成果物にもこの崩れは残っている）。再指示（prompt-2.md）を出し、`margin: -24px auto 32px` への修正で解消した。修正後、見出し・注記・カードの左端がすべて x=133px に揃ったことを計測して確認した。"
+      }
+    ],
+    "notes": [
+      "実装エージェントは「日付と時刻」という指示を広めに解釈し、時刻（19:00 など）にもドット書体を当てた。意図に沿っているため採用した。"
+    ],
+    "prompts": [
+      {
+        "label": "改善指示（Claude Haiku 5.5 へ）",
+        "file": "records/step-04/prompt.md",
+        "text": "あなたは静的Webサイトの改善を担当します。\n\n対象ディレクトリ: /Users/ttan/dev/deslop-lab/steps/step-04\nこのディレクトリ内のファイルだけを編集してください。ほかのディレクトリ（steps/step-01〜03 など）は絶対に変更しないでください。\n\nこれは架空のAIアイドル「天音ルミ」の公式サイトです。今回の改善テーマは「タイポグラフィ」です。色（グラデーションを含む）・レイアウト・画像・装飾・文章の内容は変えないでください。変更するのは書体、文字サイズ、ウェイト、行間、字間、改行の扱いと、下記で指示した見出し要素の削除だけです。\n\n## 背景\n現在はシステムフォント（ヒラギノ等）と Helvetica Neue / Arial だけで組まれています。字間を大きく広げた英字の小見出し（SCHEDULE、NEWS など）が、日本語の見出しと毎回重複しています。見出しと本文のサイズ差も小さく、どこが重要か分かりにくい状態です。\nサイトのコンセプトは「夜更かしの周波数」です。深夜ラジオ番組を持ち、星を眺め、曲を自分で作るAIアイドルの、静かで親密な夜をイメージしています。書体はこのコンセプトから選びました。\n\n## 書体（Google Fonts。いずれも SIL Open Font License）\n- 見出し・名前: Zen Maru Gothic（ウェイト 500 / 700 / 900）。丸みのある書体で、アイドルの声のやわらかさを表す\n- 本文: Zen Kaku Gothic New（400 / 500 / 700）\n- 日付・時刻だけ: DotGothic16（400）。ラジオの表示窓のようなドット書体。日付と時刻以外には使わないこと\n\nindex.html の head で、次の順に読み込んでください（display=swap）。\n```html\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=DotGothic16&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap\">\n```\nCSS の :root に変数を定義し、すべての font-family をこの3つの変数のどれかに置き換えてください。Webフォントが読み込めなくても読めるように、フォールバックも指定します。\n```css\n--font-display: \"Zen Maru Gothic\", \"Hiragino Maru Gothic ProN\", \"Hiragino Sans\", sans-serif;\n--font-body: \"Zen Kaku Gothic New\", \"Hiragino Sans\", \"Hiragino Kaku Gothic ProN\", \"Yu Gothic\", sans-serif;\n--font-dot: \"DotGothic16\", \"Osaka-Mono\", monospace;\n```\n\"Helvetica Neue\" と Arial の指定は、すべて削除してください。\n\n## サイズとウェイト（サイズの差をはっきりつける）\n- 本文: 16px（1rem）、line-height 1.9、letter-spacing 0.03em、ウェイト 400\n- 段落の1行の長さは、最大でも約36文字（max-width: 36em 程度）に抑える。表やリストは除く\n- 名前の見出し（h1 の「天音ルミ」）: Zen Maru Gothic 900、font-size: clamp(3.5rem, 11vw, 7.5rem)、line-height 1.1、letter-spacing 0.02em\n- 名前の下の「LUMI AMANE」: 本文書体 500、0.875rem、letter-spacing 0.2em（現在より狭める）\n- キャッチコピー（.tagline）: Zen Maru Gothic 700、font-size: clamp(1.25rem, 2.6vw, 1.75rem)\n- セクション見出し（h2）: Zen Maru Gothic 700、font-size: clamp(1.75rem, 4.5vw, 2.75rem)、line-height 1.3\n- 小見出し（h3）: Zen Maru Gothic 700、1.125rem\n- 補足・ラベル類: 0.8125rem 以上（それより小さい文字は作らない）\n- ナビゲーション: 本文書体 500、0.875rem、letter-spacing 0.06em\n- ボタン: 本文書体 700、1rem\n\n## 日付・時刻\nスケジュールの日付、ニュースの日付、ヒーローの「次のライブ」の日付、楽曲の発売日に、--font-dot を使ってください。日付と時刻の部分だけを <time> 要素で囲み、そこに書体を当てます（すでに <time> の箇所はそれを使う）。曜日の「（日）」も含めてかまいません。\n\n## 英字の小見出しの削除\n各セクションの英字の小見出し（class=\"section-en\" の p 要素。SCHEDULE / NEWS / MUSIC / PROFILE / GOODS / CONTACT）を HTML から削除し、関連する CSS も削除してください。直後の日本語見出しと内容が重複しているためです。\nヒーローの「AIアイドル　LM-01」（.eyebrow）は残しますが、本文書体 500、0.875rem、letter-spacing 0.1em にしてください。\n\n## 日本語の組版\n- 見出し（h1, h2, h3, .tagline）には font-feature-settings: \"palt\"; text-wrap: balance; word-break: auto-phrase; を指定する\n- 本文の段落には text-wrap: pretty; line-break: strict; を指定する\n- 本文に \"palt\" は使わない（詰めすぎると読みにくくなるため）\n- ニュースの「1st アルバム」を「1stアルバム」にする（ほかの表記と合わせる）\n\n## 完了条件\n- HTML の構造が正しいこと。font-family に変数以外の指定（\"Helvetica Neue\"、Arial、ヒラギノの直接指定など）が残っていないこと（変数の定義部分を除く）。\n- 色・グラデーション・余白・レイアウトを変えていないこと。\n- 最後に、変更点の一覧と、迷った点・意図どおりにできなかった点を報告してください。"
+      },
+      {
+        "label": "再指示：注記の左端のずれ",
+        "file": "records/step-04/prompt-2.md",
+        "text": "（再指示）steps/step-04 の表示をブラウザで確認したところ、1点問題がありました。\n\n楽曲セクションの「試聴・配信のリンクは準備中です。」（.music-note）だけが、PC幅（1366px）で画面の左端付近（x≈19px）に表示されています。見出し「楽曲」やカードの左端（x≈107px）と揃っていません。\n\n原因をCSSから特定して修正し、見出しと同じ左端に揃えてください。ほかの箇所は変更しないでください。修正後、原因と修正内容を報告してください。"
+      },
+      {
+        "label": "実装エージェントの完了報告（原文）",
+        "file": "records/step-04/agent-report.md",
+        "text": "# STEP 2-3 実装エージェントの完了報告（原文ママ）\n\n実装: Claude Haiku 5.5（サブエージェント）\n\n---\n\n指示書 /Users/ttan/dev/deslop-lab/records/step-04/prompt.md に従い、/Users/ttan/dev/deslop-lab/steps/step-04 の index.html と css/style.css を編集しました。指示書自体、steps/step-01〜03、他のファイルは変更していません。ブラウザでの表示確認はしていません（構文と指定の機械的な確認のみ）。コミットはしていません。\n\n## 変更点\n\nindex.html\n- head に Google Fonts の preconnect 2行と stylesheet 1行（指示どおりの URL、style.css より前）を追加。\n- 英字小見出し（section-en の p）を6つ削除: SCHEDULE / NEWS / MUSIC / PROFILE / GOODS / CONTACT。\n- 日付・時刻を <time> で囲んだ（datetime 付き）: ヒーローの次のライブ日付、ヒーロー/スケジュールの 19:00、オンライン配信の 20:00、ラジオの 23:00、楽曲の発売日3件（既存の time はそのまま）。\n- ニュースの「1st アルバム」→「1stアルバム」。\n\ncss/style.css\n- :root に --font-display / --font-body / --font-dot を追加し、Helvetica Neue / Arial / ヒラギノ直指定の font-family をすべて変数に置換。変数定義以外に直接指定は残っていない。\n- body: 本文書体・16px・line-height 1.9・letter-spacing .03em・ウェイト 400。\n- h1, h2, h3, .tagline に Zen Maru 700 / palt / text-wrap: balance / word-break: auto-phrase。\n- main p に max-width 36em / text-wrap: pretty / line-break: strict。\n- time に --font-dot（ウェイト 400）。\n- 名前 h1 .jp: Zen Maru 900、clamp(3.5rem, 11vw, 7.5rem)、line-height 1.1、letter-spacing .02em（h1 全体）。\n- .en（LUMI AMANE）: 本文書体 500、0.875rem、.2em。\n- .tagline: clamp(1.25rem, 2.6vw, 1.75rem)。h2: clamp(1.75rem, 4.5vw, 2.75rem)、line-height 1.3。h3: 1.125rem。\n- .eyebrow: 本文書体 500、0.875rem、.1em。ナビ: 本文書体 500、0.875rem、.06em（モバイルメニューも .875rem）。ボタン: 1rem / 700。\n- 0.8125rem 未満の文字をなくした（logo の small .6rem → .8125rem、release-meta .75rem → .8125rem など）。\n- 英字小見出しの CSS（.section-en）を削除。\n- 色・グラデーション・余白・レイアウトのプロパティは変更していない（section-en の要素削除による縦方向の詰まりのみ発生）。\n\n## 迷った点・意図どおりにできなかった点\n\n1. ウェイト 800 は読み込み対象（900/700、本文は 700/500/400）にないため、表示系は 900、その他は 700 に振り分けた。\n2. 「時刻」の解釈: 指示の対象は日付だが「日付と時刻」とあったので、19:00 / 20:00 / 23:00 も <time> で囲んで dot 書体にした。不要なら該当の <time> を外すだけで戻せる。\n3. 指示にない値: h3 の line-height は 1.5 に設定（本文 1.9 のままだと見出しが間延びするため）。.schedule-group と .tag の字間は、見出し・ラベルとして見やすい値に調整（.schedule-group は字間を外した）。\n4. .release-meta の !important（色・サイズ）は色を変えないために残した。\n5. ヒーロー見出し「天音ルミ」は指定どおり最大 7.5rem にしたため、従来（最大 6.2rem）より大きくなる。幅 1280px 付近では見出しの列幅内に収まる計算だが、表示未確認。\n6. 指示の対象外として触っていないもの: プロフィール表の「2 月 14 日」、本文中の「2027年1月」など日付らしい箇所は、指示の日付リストに含まれないため dot 書体にしていない。\n7. 「1st アルバム」の修正はニュース欄のみ（楽曲欄は既に「1stアルバム」だった）。\n\n確認したこと: font-family の残存指定、0.8125rem 未満のサイズ、800 ウェイトの残存がないこと、<time> が16箇所あることを grep で確認。\n\n---\n\n## 再指示（prompt-2.md）への完了報告（原文ママ）\n\n再指示（prompt-2.md）への対応が完了しました。対象は steps/step-04 のみ、prompt-2.md は編集していません。\n\n原因: .music-note は楽曲セクション (.section-alt) の直下の p なので、css/style.css の `.section-alt > * { max-width: var(--max); margin-left: auto; margin-right: auto; }` で中央寄せされるはずでした。しかし `.music-note { margin: -24px 0 32px; ... }` の margin 省略形が、左右の auto を 0 で上書きしていました。そのため max-width は効いていても左端が 0 に寄り、見出しやカードの左端 (max-width 1100px の中央寄せ) と揃いませんでした。この問題は今回の変更以前からあった既存のバグです。\n\n修正: css/style.css の `.music-note` の margin を `margin: -24px 0 32px;` から `margin: -24px auto 32px;` に変更しました（1行のみ）。左右が auto になるので、見出し・カードと同じ左端に揃います。\n\n他の箇所は変更していません。ブラウザでの表示確認は行っていないため、1366px 幅での x 座標はご確認ください。"
+      }
+    ],
+    "id": "step-04",
+    "site": "steps/step-04/index.html",
+    "screenshots": {
+      "mobile": "screenshots/step-04/mobile.jpg",
+      "tablet": "screenshots/step-04/tablet.jpg",
+      "desktop": "screenshots/step-04/desktop.jpg"
+    }
   }
 ];
