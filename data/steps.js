@@ -264,5 +264,64 @@ window.DESLOP_STEPS = [
       "tablet": "screenshots/step-04/tablet.jpg",
       "desktop": "screenshots/step-04/desktop.jpg"
     }
+  },
+  {
+    "label": "STEP 2-4",
+    "short": "色と装飾",
+    "phase": "STEP2",
+    "title": "色と装飾：ネオンを消して、色に役割を",
+    "theme": "色（C5）と装飾・モーション（C7）",
+    "date": "2026-11-21",
+    "models": [
+      "Claude Opus 5.5（パレットの設計・コントラストの計算・指示書の作成・レビュー）",
+      "Claude Haiku 5.5（実装）"
+    ],
+    "summary": "シアン・紫・ピンクを均等に使い、発光とグラデーションで飾っていた配色を、役割を持つ少数の色に置き換えた。役割は、夜（背景）、文字、ラムネ（唯一のアクセント）、灯（「今」を示す状態色）の4つ。常に動いていた星・浮遊・スクロール誘導のアニメーションも取り除いた。",
+    "reason": [
+      "グラデーション文字、発光するグラデーションボタン、暗背景にネオンの組み合わせは、調査したほぼすべての出典が挙げていた AI Slop の兆候（Cookbook、pixelslop、Capital & Compute ほか）。",
+      "ただし、暗い背景は一律には否定しない。このサイトでは「深夜ラジオ」「夜更かし」という設定から選ばれたものなので残し、発光と多色グラデーションだけを取り除いた。",
+      "色を「どこで何を意味するか」で決めた。ラムネ色（設定の「ラムネ色の夕焼け」から）は、リンクと主ボタンだけに使う。ランプの黄色は「次のライブ」「残りわずか」など、今を示す場所だけに使う。",
+      "常に動くアニメーションは、読む人の注意を奪うだけで情報を持たない。コンセプトの「静かな夜」とも合わない。"
+    ],
+    "changes": [
+      "パレットを役割つきの CSS 変数に置き換え（--bg / --bg-2 / --surface / --text / --text-sub / --text-muted / --ramune / --lamp ほか）。文字色はすべて WCAG AA のコントラスト比を満たす（本文 15.5:1、補足 9.2:1、控えめな文字 5.9:1）",
+      "名前のグラデーション文字を単色に変更",
+      "主ボタンを単色のラムネ色にし、発光する影とホバー時の浮き上がりを削除",
+      "スケジュールの種別ラベルを、色分けした塗りのピルから枠線だけの控えめな表示に変更",
+      "ヘッダーのすりガラス、ヒーローの発光する円、流れる星、画像の浮遊、スクロール誘導を削除",
+      "プロフィールの引用の「左だけの色付き線」を削除し、書体で引用だと分かるようにした",
+      "仮のジャケット・グッズ画像のグラデーションを、落ち着いた単色の面に変更（画像は STEP 2-6 で用意する）",
+      "フォーカス表示と文字選択の色をラムネ色に統一"
+    ],
+    "result": "意図どおり。CSS からグラデーション、backdrop-filter、text-shadow、@keyframes（ハンバーガー以外）がなくなったことを確認した。画面の印象は「ネオンの都市」から「夜の部屋」に変わった。一方で、ヒーロー画像（ネオンの夜景）だけが新しい色調から浮いている。カードの反復と、ヒーロー右側の大きな空白も目立つようになった。",
+    "evaluation": [
+      {
+        "check": "残った課題",
+        "finding": "装飾を外したことで、レイアウトの単調さ（同じ大きさのカードの反復、ヒーローの空白、セクションごとの左端のずれ）がはっきり見えるようになった。次のステップで扱う。ヒーロー画像の色調のずれは STEP 2-6 で扱う。"
+      }
+    ],
+    "issues": [],
+    "notes": [
+      "実装エージェントは、指示になかった細部（.traits のピル、.eyebrow の色、ヒーロー画像の drop-shadow）も、指示の方針に沿って判断した。内容を確認して採用した。"
+    ],
+    "prompts": [
+      {
+        "label": "改善指示（Claude Haiku 5.5 へ）",
+        "file": "records/step-05/prompt.md",
+        "text": "あなたは静的Webサイトの改善を担当します。\n\n対象ディレクトリ: /Users/ttan/dev/deslop-lab/steps/step-05\nこのディレクトリ内のファイルだけを編集してください。ほかのディレクトリ（steps/step-01〜04 など）は絶対に変更しないでください。\n\nこれは架空のAIアイドル「天音ルミ」の公式サイトです。今回の改善テーマは「色と装飾・モーション」です。レイアウト（配置・カードの構成・余白）、書体、文章、画像ファイルは変えないでください。\n\n## 背景\nサイトのコンセプトは「夜更かしの周波数」です。深夜ラジオ番組を持ち、星を眺め、自分で曲を作るAIアイドルの、静かで親密な夜をイメージしています。\nところが現在の配色は、シアン・紫・ピンクの3色を均等に使っています。名前はグラデーション文字で、ボタンはグラデーションのうえ発光しています。背景には発光する円がいくつも置かれ、星が流れ続け、画像は浮遊し、スクロール誘導も動いています。これは「暗い背景にネオン」という、AI製サイトによくある既定の見た目です。コンセプトの静けさとも合っていません。\n暗い背景は「深夜」という設定から選んだものなので、残します。取り除くのは、発光、多色のグラデーション、常に動き続けるアニメーションです。\n\n## 新しいパレット（役割で使い分ける）\ncss/style.css の :root を次の値に置き換えてください。--cyan / --pink / --violet / --accent-grad は削除します。これらを使っている箇所は、下の役割に従ってすべて置き換えてください。\n```css\n--bg: #111830;        /* 夜。ページの背景 */\n--bg-2: #18213f;      /* 交互のセクション背景 */\n--surface: #1b2547;   /* カードや囲みの面（半透明の白をやめて不透明にする） */\n--line: rgba(238, 241, 248, 0.14);\n--text: #eef1f8;      /* 本文 */\n--text-sub: #b3bcd3;  /* 補足文（背景とのコントラスト 9:1） */\n--text-muted: #8b95b0;/* さらに控えめな情報（5.8:1） */\n--ramune: #8fdcd3;    /* 唯一のブランドアクセント。リンク、主ボタン、フォーカス */\n--ramune-strong: #b0e9e2; /* 主ボタンのホバー */\n--lamp: #ffcf6b;      /* 状態色。「次のライブ」「残りわずか」など、今を示す場所だけ */\n--on-accent: #111830; /* ラムネ色・灯色の上に置く文字 */\n```\n（コントラスト比はすべて WCAG AA を満たすことを統括側で計算済みです。）\n\n## 役割ごとの指定\n- 名前「天音ルミ」: グラデーション文字をやめ、単色の --text にする（background-clip: text などを削除）\n- リンク: --ramune。ホバーで下線を出す\n- 主ボタン: 背景 --ramune、文字 --on-accent、影なし、グラデーションなし。ホバーでは背景を --ramune-strong にするだけ（位置を動かさない）\n- 副ボタン: 背景なし、1px の --line の枠、文字 --text。ホバーで枠を --ramune にする\n- ヒーローの「次のライブ」の囲み: 背景 --surface、左だけの色付き線をやめて、1px の --line の枠にする。ラベル「次のライブ」の文字色を --lamp にする（このサイトで --lamp を使う代表的な場所）\n- スケジュールの種別ラベル（配信／ラジオ／ライブ）: 色分けした塗りのピルをやめ、1px の --line の枠と --text-sub の文字にする。「終了」は --text-muted の文字\n- ニュースの日付: --text-sub\n- プロフィール表の項目名（dt）: --text-sub\n- プロフィールの引用文: 左のピンクの線をやめる。代わりに Zen Maru Gothic（--font-display）の 500、1.25rem で、--text の色にする\n- プロフィール画像の背景の紫の円形グラデーション: 単色 --bg-2 にする\n- 在庫表示: 在庫あり → --text-sub、残りわずか → --lamp、売り切れ → --text-muted\n- ロゴのマーク（.logo-mark）: グラデーションをやめ、背景 --ramune、文字 --on-accent\n- 楽曲のジャケットとグッズの仮画像: グラデーションと text-shadow の発光をやめ、背景 --bg-2、1px の --line の枠にする。番号（01 など）は --text-muted。画像は後のステップで用意するので、今は落ち着いた仮の面にしておく\n- カードの背景: 半透明の白（--panel）をやめ、--surface にする\n- フォーカス表示: 2px solid var(--ramune)、outline-offset 3px（a, button など全体で統一）\n- テキスト選択色（::selection）: 背景 --ramune、文字 --on-accent\n\n## 取り除くもの\n- ヘッダーのすりガラス（backdrop-filter）。背景は不透明な --bg、下に 1px の --line\n- ヒーロー背景の発光する円（radial-gradient）。ヒーローの背景は --bg の単色\n- 星の点の背景と、その drift アニメーション（@keyframes drift も削除）\n- ヒーロー画像の float アニメーション（@keyframes float も削除）\n- スクロール誘導（.scroll-cue の a 要素を HTML から削除し、CSS と @keyframes cue も削除）\n- ボタンやカードのホバー時の transform（浮き上がり）と発光する box-shadow\n- transition は color / background-color / border-color だけを 0.15s で変化させる（transform や box-shadow を transition の対象にしない）。ただしモバイルメニューのハンバーガーの開閉アニメーションは残してよい\n\n## 完了条件\n- css/style.css に gradient（linear-gradient / radial-gradient / repeating-linear-gradient）、backdrop-filter、text-shadow、@keyframes（ハンバーガー以外）が残っていないこと。\n- --cyan / --pink / --violet / --accent-grad / --panel への参照が残っていないこと。\n- HTML の構造が正しく、JavaScript のエラーがないこと。\n- 最後に、変更点の一覧と、迷った点・意図どおりにできなかった点を報告してください。"
+      },
+      {
+        "label": "実装エージェントの完了報告（原文）",
+        "file": "records/step-05/agent-report.md",
+        "text": "# STEP 2-4 実装エージェントの完了報告（原文ママ）\n\n実装: Claude Haiku 5.5（サブエージェント）\n\n---\n\n指示書（records/step-05/prompt.md）に従い、steps/step-05 の「色と装飾・モーション」の改善を完了しました。指示書ファイルと steps/step-05 以外は変更していません。\n\n## 変更点\n- css/style.css\n  - :root を指定のパレットに置き換え。--cyan / --pink / --violet / --accent-grad / --panel を削除し、参照をすべて役割色に置換。\n  - 名前（.hero h1 .jp）をグラデーション文字から単色 --text に。リンクは --ramune、ホバーで下線。\n  - 主ボタンは --ramune 背景 / --on-accent 文字 / 影なし。ホバーは --ramune-strong のみ。副ボタンは透明背景 + 1px --line、ホバーで枠 --ramune。\n  - 「次のライブ」は --surface + 1px --line の枠（左線を削除）。ラベルは --lamp。\n  - 種別ラベル（.tag）は 1px --line 枠 + --text-sub。.tag-past は --text-muted。\n  - ニュース日付、dt は --text-sub。プロフィール引用は Zen Maru Gothic 500 / 1.25rem / --text（左線削除）。\n  - プロフィール画像背景、ジャケット・グッズの仮画像は --bg-2 + 1px --line 枠（グラデーションと text-shadow を削除）。番号は --text-muted。\n  - 在庫色: 在庫あり --text-sub / 残りわずか --lamp / 売り切れ --text-muted。\n  - ロゴマークは --ramune / --on-accent。カードと囲みは --surface（不透明）。\n  - フォーカスは 2px solid --ramune、outline-offset 3px。::selection を追加。\n  - 削除: ヘッダーの backdrop-filter（背景は不透明な --bg）、ヒーローの radial-gradient と星の点、@keyframes drift / float / cue、画像の drop-shadow、スクロール誘導の CSS、ホバー時の transform と box-shadow。\n  - transition は .btn と .gnav a の color / background-color / border-color のみ（0.15s）。ハンバーガーの transform / opacity と、モバイルメニューの max-height は残した。\n- index.html\n  - スクロール誘導の `<a class=\"scroll-cue\">` を 1 行削除。それ以外の構造は変更なし。\n\n## 完了条件の確認\n- gradient / backdrop-filter / text-shadow / @keyframes は残っていない（ハンバーガーの transform のみ残る）。\n- --cyan / --pink / --violet / --accent-grad / --panel への参照はない。\n- HTML のタグの対応は崩れていない（簡易チェック）。js/main.js は node --check で構文エラーなし。\n- ブラウザでの目視確認はしていない。\n\n## 迷った点・意図どおりにできなかった点\n- .traits の pill は --panel の置き換え先が指示になかったため、--surface にした。\n- .release-meta は `!important` で cyan を上書きしていたため、`.release .release-meta` の詳細度で --text-sub に変えた（!important は外した）。\n- .eyebrow（ヒーローの小見出し）は指示になかったが、cyan の代わりに --ramune にした。\n- ジャケット・グッズの仮画像は 4 種類の個別 CSS を削除し、同一のスタイルに統一した。HTML の jacket-a〜c / goods-a〜d クラスは残しているが、スタイルは持たない。\n- ヒーロー画像の filter: drop-shadow（発光）は、指示の「発光をやめる」に沿って削除した。\n- 指示になかったが、.schedule-past の opacity .7 は残した。ヒーロー背景の .hero-bg 要素も、単色の --bg を持たせて残した。\n- .btn-ghost の背景は --panel の代わりに none にした。\n- 色の直書き（#0b0d1f、#7dffb0、#ffd27a、#fff系の rgba）はすべて役割色または --on-accent に置き換えた。"
+      }
+    ],
+    "id": "step-05",
+    "site": "steps/step-05/index.html",
+    "screenshots": {
+      "mobile": "screenshots/step-05/mobile.jpg",
+      "tablet": "screenshots/step-05/tablet.jpg",
+      "desktop": "screenshots/step-05/desktop.jpg"
+    }
   }
 ];
